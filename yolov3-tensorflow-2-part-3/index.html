@@ -1,0 +1,1418 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+     <!--<script src="https://code.jquery.com/jquery-1.9.1.js"></script>-->
+     <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <title>The beginner’s guide to implementing YOLOv3 in TensorFlow 2.0 (part-3)</title>
+<meta name='robots' content='max-image-preview:large' />
+
+<!-- This site is optimized with the Yoast SEO plugin v13.1 - https://yoast.com/wordpress/plugins/seo/ -->
+<meta name="description" content="In part 2, we have built the YOLOv3 network. In this part 3, we&#039;re going to convert the original yolov3.weights file into TensorFlow 2&#039;s weights format."/>
+<meta name="robots" content="max-snippet:-1, max-image-preview:large, max-video-preview:-1"/>
+<link rel="canonical" href="https://machinelearningspace.com/yolov3-tensorflow-2-part-3/" />
+<meta property="og:locale" content="en_US" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="The beginner’s guide to implementing YOLOv3 in TensorFlow 2.0 (part-3)" />
+<meta property="og:description" content="In part 2, we have built the YOLOv3 network. In this part 3, we&#039;re going to convert the original yolov3.weights file into TensorFlow 2&#039;s weights format." />
+<meta property="og:url" content="https://machinelearningspace.com/yolov3-tensorflow-2-part-3/" />
+<meta property="og:site_name" content="Machine Learning Space" />
+<meta property="article:tag" content="yolov3 object detection" />
+<meta property="article:tag" content="Yolov3 Tensorflow" />
+<meta property="article:tag" content="YoloV3 TensorFlow 2" />
+<meta property="article:tag" content="Yolov3 TensorFlow 2.0" />
+<meta property="article:tag" content="Yolov3 tutorial" />
+<meta property="article:section" content="Python Programming" />
+<meta property="article:published_time" content="2019-12-29T18:05:45+00:00" />
+<meta property="article:modified_time" content="2022-10-29T22:36:55+00:00" />
+<meta property="og:updated_time" content="2022-10-29T22:36:55+00:00" />
+<meta property="og:image" content="https://machinelearningspace.com/wp-content/uploads/2020/01/val2.jpg" />
+<meta property="og:image:secure_url" content="https://machinelearningspace.com/wp-content/uploads/2020/01/val2.jpg" />
+<meta property="og:image:width" content="1000" />
+<meta property="og:image:height" content="579" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:description" content="In part 2, we have built the YOLOv3 network. In this part 3, we&#039;re going to convert the original yolov3.weights file into TensorFlow 2&#039;s weights format." />
+<meta name="twitter:title" content="The beginner’s guide to implementing YOLOv3 in TensorFlow 2.0 (part-3)" />
+<meta name="twitter:image" content="https://machinelearningspace.com/wp-content/uploads/2020/01/val2.jpg" />
+<script type='application/ld+json' class='yoast-schema-graph yoast-schema-graph--main'>{"@context":"https://schema.org","@graph":[{"@type":["Person","Organization"],"@id":"https://machinelearningspace.com/#/schema/person/411e2a808d3ceacf4a2441018f6c64f6","name":"rahmadsadli","image":{"@type":"ImageObject","@id":"https://machinelearningspace.com/#personlogo","inLanguage":"en-US","url":"https://secure.gravatar.com/avatar/a27bb97fae65679ed0778644bcf5da9e?s=96&d=mm&r=g","caption":"rahmadsadli"},"logo":{"@id":"https://machinelearningspace.com/#personlogo"},"sameAs":[]},{"@type":"WebSite","@id":"https://machinelearningspace.com/#website","url":"https://machinelearningspace.com/","name":"Machine Learning Space","inLanguage":"en-US","description":"A space for learning machine learning","publisher":{"@id":"https://machinelearningspace.com/#/schema/person/411e2a808d3ceacf4a2441018f6c64f6"},"potentialAction":{"@type":"SearchAction","target":"https://machinelearningspace.com/?s={search_term_string}","query-input":"required name=search_term_string"}},{"@type":"ImageObject","@id":"https://machinelearningspace.com/yolov3-tensorflow-2-part-3/#primaryimage","inLanguage":"en-US","url":"https://machinelearningspace.com/wp-content/uploads/2020/01/val2.jpg","width":1000,"height":579},{"@type":"WebPage","@id":"https://machinelearningspace.com/yolov3-tensorflow-2-part-3/#webpage","url":"https://machinelearningspace.com/yolov3-tensorflow-2-part-3/","name":"The beginner\u2019s guide to implementing YOLOv3 in TensorFlow 2.0 (part-3)","isPartOf":{"@id":"https://machinelearningspace.com/#website"},"inLanguage":"en-US","primaryImageOfPage":{"@id":"https://machinelearningspace.com/yolov3-tensorflow-2-part-3/#primaryimage"},"datePublished":"2019-12-29T18:05:45+00:00","dateModified":"2022-10-29T22:36:55+00:00","description":"In part 2, we have built the YOLOv3 network. In this part 3, we're going to convert the original yolov3.weights file into TensorFlow 2's weights format."},{"@type":"Article","@id":"https://machinelearningspace.com/yolov3-tensorflow-2-part-3/#article","isPartOf":{"@id":"https://machinelearningspace.com/yolov3-tensorflow-2-part-3/#webpage"},"author":{"@id":"https://machinelearningspace.com/#/schema/person/411e2a808d3ceacf4a2441018f6c64f6"},"headline":"The beginner\u2019s guide to implementing YOLOv3 in TensorFlow 2.0 (part-3)","datePublished":"2019-12-29T18:05:45+00:00","dateModified":"2022-10-29T22:36:55+00:00","commentCount":21,"mainEntityOfPage":{"@id":"https://machinelearningspace.com/yolov3-tensorflow-2-part-3/#webpage"},"publisher":{"@id":"https://machinelearningspace.com/#/schema/person/411e2a808d3ceacf4a2441018f6c64f6"},"image":{"@id":"https://machinelearningspace.com/yolov3-tensorflow-2-part-3/#primaryimage"},"keywords":"yolov3 object detection,Yolov3 Tensorflow,YoloV3 TensorFlow 2,Yolov3 TensorFlow 2.0,Yolov3 tutorial","articleSection":"Deep Learning,Machine Learning,Object Detection,Python Programming","inLanguage":"en-US"}]}</script>
+<!-- / Yoast SEO plugin. -->
+
+<link rel='dns-prefetch' href='//fonts.googleapis.com' />
+<link rel='dns-prefetch' href='//use.fontawesome.com' />
+<link rel='dns-prefetch' href='//s.w.org' />
+<link rel="alternate" type="application/rss+xml" title="Machine Learning Space &raquo; The beginner’s guide to implementing YOLOv3 in TensorFlow 2.0 (part-3) Comments Feed" href="https://machinelearningspace.com/yolov3-tensorflow-2-part-3/feed/" />
+		<!-- This site uses the Google Analytics by MonsterInsights plugin v8.9.1 - Using Analytics tracking - https://www.monsterinsights.com/ -->
+							<script
+				src="//www.googletagmanager.com/gtag/js?id=UA-156159628-1"  data-cfasync="false" data-wpfc-render="false" type="text/javascript" async></script>
+			<script data-cfasync="false" data-wpfc-render="false" type="text/javascript">
+				var mi_version = '8.9.1';
+				var mi_track_user = true;
+				var mi_no_track_reason = '';
+				
+								var disableStrs = [
+															'ga-disable-UA-156159628-1',
+									];
+
+				/* Function to detect opted out users */
+				function __gtagTrackerIsOptedOut() {
+					for (var index = 0; index < disableStrs.length; index++) {
+						if (document.cookie.indexOf(disableStrs[index] + '=true') > -1) {
+							return true;
+						}
+					}
+
+					return false;
+				}
+
+				/* Disable tracking if the opt-out cookie exists. */
+				if (__gtagTrackerIsOptedOut()) {
+					for (var index = 0; index < disableStrs.length; index++) {
+						window[disableStrs[index]] = true;
+					}
+				}
+
+				/* Opt-out function */
+				function __gtagTrackerOptout() {
+					for (var index = 0; index < disableStrs.length; index++) {
+						document.cookie = disableStrs[index] + '=true; expires=Thu, 31 Dec 2099 23:59:59 UTC; path=/';
+						window[disableStrs[index]] = true;
+					}
+				}
+
+				if ('undefined' === typeof gaOptout) {
+					function gaOptout() {
+						__gtagTrackerOptout();
+					}
+				}
+								window.dataLayer = window.dataLayer || [];
+
+				window.MonsterInsightsDualTracker = {
+					helpers: {},
+					trackers: {},
+				};
+				if (mi_track_user) {
+					function __gtagDataLayer() {
+						dataLayer.push(arguments);
+					}
+
+					function __gtagTracker(type, name, parameters) {
+						if (!parameters) {
+							parameters = {};
+						}
+
+						if (parameters.send_to) {
+							__gtagDataLayer.apply(null, arguments);
+							return;
+						}
+
+						if (type === 'event') {
+							
+														parameters.send_to = monsterinsights_frontend.ua;
+							__gtagDataLayer(type, name, parameters);
+													} else {
+							__gtagDataLayer.apply(null, arguments);
+						}
+					}
+
+					__gtagTracker('js', new Date());
+					__gtagTracker('set', {
+						'developer_id.dZGIzZG': true,
+											});
+															__gtagTracker('config', 'UA-156159628-1', {"forceSSL":"true","link_attribution":"true"} );
+										window.gtag = __gtagTracker;										(function () {
+						/* https://developers.google.com/analytics/devguides/collection/analyticsjs/ */
+						/* ga and __gaTracker compatibility shim. */
+						var noopfn = function () {
+							return null;
+						};
+						var newtracker = function () {
+							return new Tracker();
+						};
+						var Tracker = function () {
+							return null;
+						};
+						var p = Tracker.prototype;
+						p.get = noopfn;
+						p.set = noopfn;
+						p.send = function () {
+							var args = Array.prototype.slice.call(arguments);
+							args.unshift('send');
+							__gaTracker.apply(null, args);
+						};
+						var __gaTracker = function () {
+							var len = arguments.length;
+							if (len === 0) {
+								return;
+							}
+							var f = arguments[len - 1];
+							if (typeof f !== 'object' || f === null || typeof f.hitCallback !== 'function') {
+								if ('send' === arguments[0]) {
+									var hitConverted, hitObject = false, action;
+									if ('event' === arguments[1]) {
+										if ('undefined' !== typeof arguments[3]) {
+											hitObject = {
+												'eventAction': arguments[3],
+												'eventCategory': arguments[2],
+												'eventLabel': arguments[4],
+												'value': arguments[5] ? arguments[5] : 1,
+											}
+										}
+									}
+									if ('pageview' === arguments[1]) {
+										if ('undefined' !== typeof arguments[2]) {
+											hitObject = {
+												'eventAction': 'page_view',
+												'page_path': arguments[2],
+											}
+										}
+									}
+									if (typeof arguments[2] === 'object') {
+										hitObject = arguments[2];
+									}
+									if (typeof arguments[5] === 'object') {
+										Object.assign(hitObject, arguments[5]);
+									}
+									if ('undefined' !== typeof arguments[1].hitType) {
+										hitObject = arguments[1];
+										if ('pageview' === hitObject.hitType) {
+											hitObject.eventAction = 'page_view';
+										}
+									}
+									if (hitObject) {
+										action = 'timing' === arguments[1].hitType ? 'timing_complete' : hitObject.eventAction;
+										hitConverted = mapArgs(hitObject);
+										__gtagTracker('event', action, hitConverted);
+									}
+								}
+								return;
+							}
+
+							function mapArgs(args) {
+								var arg, hit = {};
+								var gaMap = {
+									'eventCategory': 'event_category',
+									'eventAction': 'event_action',
+									'eventLabel': 'event_label',
+									'eventValue': 'event_value',
+									'nonInteraction': 'non_interaction',
+									'timingCategory': 'event_category',
+									'timingVar': 'name',
+									'timingValue': 'value',
+									'timingLabel': 'event_label',
+									'page': 'page_path',
+									'location': 'page_location',
+									'title': 'page_title',
+								};
+								for (arg in args) {
+																		if (!(!args.hasOwnProperty(arg) || !gaMap.hasOwnProperty(arg))) {
+										hit[gaMap[arg]] = args[arg];
+									} else {
+										hit[arg] = args[arg];
+									}
+								}
+								return hit;
+							}
+
+							try {
+								f.hitCallback();
+							} catch (ex) {
+							}
+						};
+						__gaTracker.create = newtracker;
+						__gaTracker.getByName = newtracker;
+						__gaTracker.getAll = function () {
+							return [];
+						};
+						__gaTracker.remove = noopfn;
+						__gaTracker.loaded = true;
+						window['__gaTracker'] = __gaTracker;
+					})();
+									} else {
+										console.log("");
+					(function () {
+						function __gtagTracker() {
+							return null;
+						}
+
+						window['__gtagTracker'] = __gtagTracker;
+						window['gtag'] = __gtagTracker;
+					})();
+									}
+			</script>
+				<!-- / Google Analytics by MonsterInsights -->
+		<script type="text/javascript">
+window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/14.0.0\/72x72\/","ext":".png","svgUrl":"https:\/\/s.w.org\/images\/core\/emoji\/14.0.0\/svg\/","svgExt":".svg","source":{"concatemoji":"https:\/\/machinelearningspace.com\/wp-includes\/js\/wp-emoji-release.min.js?ver=6.0.3"}};
+/*! This file is auto-generated */
+!function(e,a,t){var n,r,o,i=a.createElement("canvas"),p=i.getContext&&i.getContext("2d");function s(e,t){var a=String.fromCharCode,e=(p.clearRect(0,0,i.width,i.height),p.fillText(a.apply(this,e),0,0),i.toDataURL());return p.clearRect(0,0,i.width,i.height),p.fillText(a.apply(this,t),0,0),e===i.toDataURL()}function c(e){var t=a.createElement("script");t.src=e,t.defer=t.type="text/javascript",a.getElementsByTagName("head")[0].appendChild(t)}for(o=Array("flag","emoji"),t.supports={everything:!0,everythingExceptFlag:!0},r=0;r<o.length;r++)t.supports[o[r]]=function(e){if(!p||!p.fillText)return!1;switch(p.textBaseline="top",p.font="600 32px Arial",e){case"flag":return s([127987,65039,8205,9895,65039],[127987,65039,8203,9895,65039])?!1:!s([55356,56826,55356,56819],[55356,56826,8203,55356,56819])&&!s([55356,57332,56128,56423,56128,56418,56128,56421,56128,56430,56128,56423,56128,56447],[55356,57332,8203,56128,56423,8203,56128,56418,8203,56128,56421,8203,56128,56430,8203,56128,56423,8203,56128,56447]);case"emoji":return!s([129777,127995,8205,129778,127999],[129777,127995,8203,129778,127999])}return!1}(o[r]),t.supports.everything=t.supports.everything&&t.supports[o[r]],"flag"!==o[r]&&(t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&t.supports[o[r]]);t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&!t.supports.flag,t.DOMReady=!1,t.readyCallback=function(){t.DOMReady=!0},t.supports.everything||(n=function(){t.readyCallback()},a.addEventListener?(a.addEventListener("DOMContentLoaded",n,!1),e.addEventListener("load",n,!1)):(e.attachEvent("onload",n),a.attachEvent("onreadystatechange",function(){"complete"===a.readyState&&t.readyCallback()})),(e=t.source||{}).concatemoji?c(e.concatemoji):e.wpemoji&&e.twemoji&&(c(e.twemoji),c(e.wpemoji)))}(window,document,window._wpemojiSettings);
+</script>
+<style>.wsmPushRight{ float:right; } .wsmPushLeft{ float:left; } .wsmHide{ display:none; } .wsmWidth100p{ width:100%; } .wsmErrorBox{ padding:5px; background:#c80000; color:#fff; margin:10px 0; } .wsmInlineBlock{ display: inline-block; white-space: nowrap; } .wsmTooltip { position: relative; display: inline-block; } .wsmTooltip .wsmTooltipText { display: none; width: 200px; background-color: rgba(0,0,0,0.8); color: #fff; text-align: left; padding: 5px; border-radius: 4px; position: absolute; z-index: 1; top: -5px; left: 125%; } .wsmTooltipText::after { content: ""; position: absolute; top: 50%; right: 100%; margin-top: -5px; border-width: 5px; border-style: solid; border-color: transparent #555 transparent transparent; } .wsmTooltipText font{ display:block; } .wsmTooltip:hover .wsmTooltipText { display: block; } .wsmArrowUp { width: 0; height: 0; border-left: 5px solid transparent; border-right: 5px solid transparent; border-bottom: 5px solid green; display:inline-block; } .wsmArrowDown { width: 0; height: 0; border-left: 5px solid transparent; border-right: 5px solid transparent; border-top: 5px solid #f00; display:inline-block; } h1.wsmHead{ margin-bottom:10px; font-weight:bold; } .wmsHorizontalTab{ width: 100%; float: left; } .wmsHorizontalTab ul.wmsTabList{ margin:5px 0 ; padding:0; /* border-bottom:1px solid ; */ border-bottom:1px solid #d9d9d9; float:left; width: 100%; } ul.wsmUL { list-style-type: none; margin: 0; padding: 0; overflow: hidden; } ul.wsmUL.wsmTodaysStats{ width:100%; display:flex; } ul.wsmUL li{ padding:12px 20px; margin:0; border-right:1px solid #cccccc; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; } ul.wsmUL.wsmTodaysStats li{ width:calc(100% / 6); flex:1; align-items:stretch; float: left; } ul.wsmUL.wsmTodaysStats #wsm_onlineVisitors.highlight{ background:#339933; color:#fff; } ul.wsmUL.wsmLast2months li{ width:calc(100% / 4); flex:1; align-items:stretch; float: left; } .wsmForeCast ul.wsmUL li{ width:calc(100% / 2); flex:1; align-items:stretch; float: left; } ul.wsmUL.wsmTodaysStats li:last-child,ul.wsmUL.wsmLast2months li:last-child,.wsmForeCast ul.wsmUL li:last-child{ border-right:none; } ul.wsmUL.wsmTodaysStats li .wsmH2Number,ul.wsmUL.wsmLast2months li .wsmH2Number,.wsmForeCast ul.wsmUL li .wsmH2Number{ font-weight:bold; font-size:18px; } ul.wsmUL.wsmGenStats li{ padding:5px 20px; border-bottom:1px solid #cccccc; } ul.wsmUL.wsmGenStats li .wsmH2Number{ font-weight:bold; color: #0073aa; } .wsmForeCast ul.wsmUL .wsmLeftBlock{ float:left; } .wsmForeCast ul.wsmUL .wsmRightBlock{ float:right; margin-right:50px; } .wsmForeCast ul.wsmUL .wsmLeftBlock .wsmH2Number{ padding:5px 0; } .wsmForeCast ul.wsmUL .wsmRightBlock div{ padding:6px 0; } .wsmForeCast ul.wsmUL .wsmRightBlock div.wsmTop{ border-bottom:1px solid #ccc; } .wsmForeCast ul.wsmUL .wsmRightBlock .wsmH2Number{ color:#0073aa; padding-right:5px; } .wsmForeCast ul.wsmUL .wsmRightBlock span.wsmLabel{ font-size:14px; } .wmsHorizontalTab .wsmTopTitle { background:#0073aa; margin: 5px 0; padding: 8px; font-size: 16px; font-weight: normal; color: #fff; } .wmsHorizontalTab .wsmTopTitle span.wsmBrowsing{ float:right; } .wmsHorizontalTab ul.wmsTabList li{ float:left; margin:0 8px; border-top:1px solid #d9d9d9; border-right:1px solid #d9d9d9; border-left:1px solid #d9d9d9; } .wmsHorizontalTab ul.wmsTabList.wsmSubTabList li{ margin:0 2px; } .wmsHorizontalTab ul.wmsTabList li a{ /*color:;*/ color:#444; text-decoration:none; padding:10px; /* background:; */ background:#e4e4e4; font-weight:bold; display:block; position: relative; } .wmsHorizontalTab ul.wmsTabList.wsmSubTabList li a { padding: 2px 10px; font-size: 12px; font-weight: normal; background:#0073aa; color:#fff; } .wmsHorizontalTab ul.wmsTabList li a:hover,.wmsHorizontalTab ul.wmsTabList li a.active{ /* color:#fff; background: ; */ background: #f1f1f1; bottom: -1px; } .wmsHorizontalTab ul.wmsTabList.wsmSubTabList li a:hover,.wmsHorizontalTab ul.wmsTabList.wsmSubTabList li a.active{ color:#fff; background: #333; } .wmsHorizontalTab ul.wmsSubList{ margin:5px 0; padding:0; float:left; width: 100%; } .wmsHorizontalTab ul.wmsSubList li { float:left; margin:0; } .wmsHorizontalTab ul.wmsSubList li a { padding:0 5px; border-right:1px solid #333; text-decoration:none; display:block; color:#333} .geo_stats_submenu a:hover,.geo_stats_submenu a.active, .stats_submenu a:hover,.stats_submenu a.active, .wmsHorizontalTab ul.wmsSubList li a:hover,.wmsHorizontalTab ul.wmsSubList li a.active{ color:#0073aa; outline:none; box-shadow:none; } .wmsHorizontalTab ul.wmsSubList li:last-child a{ border-right:none; } .wsmMetaboxContainer h2{ background:#0073aa; color:#fff; } .wsmMetaboxContainer .handlediv, .wsmMetaboxContainer .item-edit, .wsmMetaboxContainer .sidebar-name-arrow, .wsmMetaboxContainer .accordion-section-title:after{ color:#fff; } .wsmMetaboxContainer #dashboard-widgets .hndle a{ line-height: normal; display: inline-block; vertical-align: middle; margin-right:10px; } #wpbody-content .wsmMetaboxContainer #dashboard-widgets #wsm-postbox-container-1, #wpbody-content .wsmMetaboxContainer #dashboard-widgets #wsm-postbox-container-4{ width:100%; } #wpbody-content .wsmMetaboxContainer #dashboard-widgets #wsm-postbox-container-2{ float:left; width:49.5%; } #wpbody-content .wsmMetaboxContainer #dashboard-widgets #wsm-postbox-container-3{ float:right; width:49.5%; } #wpbody-content .wsmMetaboxContainer #dashboard-widgets .postbox .inside{ border:1px solid #ccc; margin:0; padding:0; border-top:none; } #barStacked_rgraph_domtext_wrapper,#LastBarStacked_rgraph_domtext_wrapper{ transform:skewY(0) !important; } .wsmMetaboxContainer .jqplot-target{ font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif; } .wsmMetaboxContainer table.jqplot-table-legend, .wsmMetaboxContainer table.jqplot-cursor-legend{ font-size: 12px; color:#444; line-height:normal; min-width:200px !important; } .referral_url_history .jqplot-highlighter-tooltip, .referral_url_history .jqplot-canvasOverlay-tooltip, .wsmMetaboxContainer .jqplot-highlighter-tooltip, .wsmMetaboxContainer .jqplot-canvasOverlay-tooltip{ background: rgba(0,0,0,0.6); z-index:11000; font-size: 13px; color:#fff !important; padding: 2px 5px; } .wsmMetaboxContainer .jqplot-highlighter-tooltip span{ margin-right:5px; float:left; width:10px; height:15px; border:1px solid #000; } .wsmMetaboxContainer #LastBarStacked .jqplot-table-legend{ left: 27px !important; top: -5px !important; } .wsmMetaboxContainer .postbox .hndle, .wsmMetaboxContainer .stuffbox .hndle{ border-bottom:1px solid #0073aa; } .wsmMetaboxContainer .chartContainer .wsmTopChartBar,.wsmMetaboxContainer .wsmForecastHeader{ padding:0; margin:0; background:#ecedef; border-bottom:1px solid #d2d9e1; border-top: 1px solid #d2d9e1; display: flex; } .wsmMetaboxContainer .wsmForecastHeader{ padding: 6px 12px; font-size:13px; font-weight:bold; } .wsmMetaboxContainer .wsmTopChartBar .wsmChartLegend .jqplot-table-legend { position:relative; margin:6px 12px; } .wsmMetaboxContainer .chartContainer .wsmTopChartBar .wsmBarCompare,.wsmMetaboxContainer .chartContainer .wsmTopChartBar .wsmChartLegend{ flex:auto; text-align:left; } .wsmMetaboxContainer .chartContainer .wsmTopChartBar .wsmBarCompare{ text-align:right; } .wsmMetaboxContainer .chartContainer .wsmTopChartBar .wsmBarCompare .wsmButton:last-child{ border-right: none; } .wsmMetaboxContainer .wsmButton { display: inline-block; white-space: nowrap; border-left: 1px solid #f2f2f2; border-right: 1px solid #bfcad5; padding: 3px 10px; margin: 0.5em 0; text-decoration: none; color: #333; text-shadow:0 1px 0 #fff; font-weight:bold; } .wsmMetaboxContainer .wsmButton img { margin: auto 2px; vertical-align: bottom; display: inline-block; } .wsmMetaboxContainer .wsmButton:hover,.wsmMetaboxContainer .wsmButton:focus,.wsmMetaboxContainer .wsmButton.active{ color:#0073aa; box-shadow:none; } .wsmMetaboxContainer #pieGeolocation .jqplot-table-legend.jqplot-table-legend-swatch,.wsmMetaboxContainer #pieGeolocation .jqplot-table-legend.jqplot-table-legend-label{ padding-top:0 !important; } .wsmMetaboxContainer .wsmBoxUPDdataTIP { -webkit-border-radius: 2px; -moz-border-radius: 2px; border-radius: 2px; padding: 1px 2px; font-family: Arial; font-size: 12px; color: #fff; text-decoration: none; background-color: #393; position: relative; z-index: 100; left: 0; top: 0; display: none; -moz-box-shadow: 1px 1px 4px #333; -webkit-box-shadow: 1px 1px 4px #333; box-shadow: 1px 1px 4px #333; margin-left: 2px; line-height:normal; } .wsmMetaboxContainer #wsm_genStats .wsmCounters .wsmBoxUPDdataTIP{ margin-right:4px; } .wsmMetaboxContainer .wsmCounters .wsmBoxUPDdataTIP.wmcRedBack{ background-color: #9c0000; } .wsmColorRed{ color:#c00 !important; } .wsmColorYellow{ color:#ff9400 !important; } .wsmColorGreen{ color:#393 !important; } .wsmMetaboxContainer .wsmTableContainer{ min-height: .01%; max-height: 350px; overflow-x: auto; overflow-y: auto; } .wsmMetaboxContainer #wsm_recentVisPagesDetails .wsmTableContainer, .wsmMetaboxContainer #wsm_mostActiveVisitorsDetails .wsmTableContainer,.wsmMetaboxContainer #wsm_popularPagesDetails .wsmTableContainer,.wsmMetaboxContainer #wsm_popularReferrerDetails .wsmTableContainer,.wsmMetaboxContainer #wsm_activeVisitorsCountByCity .wsmTableContainer,.wsmMetaboxContainer #wsm_activeVisitorsCountByCountry .wsmTableContainer{ max-height: none; } .wsmMetaboxContainer #wsm_mostActiveVisitorsDetailsList .wsmTableContainer,.wsmMetaboxContainer #wsm_recentVisitedPagesdetailsList .wsmTableContainer{ max-height: 500px; } .wsmMetaboxContainer .wsmTableContainer table,.wsmMetaboxContainer #wsm_dayStatBox table{ width: 100%; max-width: 100%; border-spacing: 0; border-collapse: collapse; } .wsmMetaboxContainer #wsm_dayStatBox table tr td{ border-right: 1px solid #ddd; border-bottom: 1px solid #ddd; padding:5px; } .wsmMetaboxContainer #wsm_dayStatBox table tr td:last-child{ border-right: none; } .wsmMetaboxContainer #wsm_dayStatBox table tr:last-child td{ border-bottom: none; } .wsmMetaboxContainer #wsm_dayStatBox table tr td span{ font-size:16px; font-weight:bold; color: #0073aa; } .wsmMetaboxContainer #wsm_dayStatBox table tr td span.wsmColorGray{ color:#808080; } .wsmMetaboxContainer .wsmTableContainer .wsmTableStriped > tbody > tr:nth-of-type(odd) { background-color: #f9f9f9; } .wsmMetaboxContainer .wsmTableContainer .wsmTableStriped > tbody > tr:nth-of-type(even) { background-color: #fff; } .wsmMetaboxContainer .wsmTableContainer table tr{ margin-left:12px; } .wsmMetaboxContainer .wsmTableContainer table tr td,.wsmMetaboxContainer .wsmTableContainer table tr th{ line-height: 1.42857143; vertical-align: top; border-top: 1px solid #ddd; padding:5px; } .wsmMetaboxContainer .wsmTableContainer table tr th{ text-align:left; } .wsmMetaboxContainer .wsmTableContainer table tr td.wsmTimeDiff{ padding-left:12px; font-weight:bold; color:#0073aa; width:50px; text-align:right; } .wsmMetaboxContainer #wsm_refferStatsBox.wsmTableContainer table th{ text-align:right; font-weight:bold; } .wsmMetaboxContainer #wsm_refferStatsBox.wsmTableContainer table td{ text-align:right; } .wsmMetaboxContainer #wsm_refferStatsBox.wsmTableContainer table td div{ color:#808080; } .wsmMetaboxContainer #wsm_refferStatsBox.wsmTableContainer table td:first-child{ text-align:left; font-weight:normal; } .wsmMetaboxContainer #wsm_refferStatsBox.wsmTableContainer table th:first-child{ text-align:left; } .wsmMetaboxContainer .wsmFilterWrapper .ui-datepicker{ width:14em; border: 1px solid #f0f0f0; background:none; background-color: #fff; } .wsmMetaboxContainer .wsmFilterWrapper .ui-datepicker .ui-datepicker-title select{ font-size:12px; line-height: 24px; height: 24px; } .wsmMetaboxContainer .wsmFilterWrapper .ui-datepicker .ui-datepicker-prev, .wsmMetaboxContainer .wsmFilterWrapper .ui-datepicker .ui-datepicker-next{ line-height: 24px; height: 24px; top:4px; } .wsmMetaboxContainer .wsmFilterWrapper .ui-datepicker .ui-state-hover.ui-datepicker-prev-hover, .wsmMetaboxContainer .wsmFilterWrapper .ui-datepicker .ui-state-hover.ui-datepicker-next-hover{ background:none; top:4px; } .wsmMetaboxContainer .wsmFilterWrapper .ui-datepicker .ui-datepicker-header{ background:none; border:none; } .wsmMetaboxContainer .wsmFilterWrapper .ui-datepicker .ui-datepicker-calendar th{ padding: .2em .3em; } .wsmMetaboxContainer .wsmFilterWrapper table.wsmOuterTable, .wsmMetaboxContainer .wsmFilterWrapper table.wsmOuterTable table{ width:100%; } .wsmMetaboxContainer .wsmFilterWrapper table.wsmOuterTable tr td:nth-child(2) table{ border-right:1px solid #ddd; } .wsmMetaboxContainer .wsmFilterWrapper .wsmMiddleWrapper span:first-child{ margin-right:20px; } .wsmMetaboxContainer .wsmFilterWrapper .ui-datepicker .ui-datepicker-calendar span{ margin-right:0px; } .wsmMetaboxContainer .wsmFilterWrapper .wsmMiddleWrapper .wsmDaily .wsmNormal table tr td:first-child{ padding-right:20px; } #left-sortables .wsmTableContainer table tr td.wsmTimeDiff,#right-sortables .wsmTableContainer table tr td.wsmTimeDiff{ width:20px; } #left-sortables .wsmTableContainer table tr td.wsmPageTitle{ padding-left:15px; } #right-sortables #wsm_mostActiveVisitorsList table tr td:nth-child(2){ width: 330px; padding-left:15px; } #right-sortables #wsm_mostActiveVisitorsList table tr td.wsmIconSet .flag{ margin-bottom:2px; } .wsmMetaboxContainer .wsmTableContainer table tr td.wsmPageTitle{ padding-left:30px; } .wsmMetaboxContainer .wsmTableContainer table tr td .wsmPageTitle a{ word-break: break-all; word-wrap:break-word; } .wsmMetaboxContainer .wsmTableContainer table tr td.wsmIconSet{ width:80px; } .wsmMetaboxContainer #wsm_activeVisitorsCountByCity table tr td.wsmIconSet{ width:auto; } .wsmMetaboxContainer #wsm_activeVisitorsCountByCountry table tr td.wsmIconSet{ width:auto; } #top-sortables .wsmTableContainer table tr td.wsmCityCountry{ width:150px; } .wsmMetaboxContainer .wsmTableContainer table tr td.wsmCityCountry{ width:80px; } .wsmMetaboxContainer .wsmTableContainer table tr td.wsmBrowerOS{ width:50px; } .wsmMetaboxContainer #wsm_mostActiveVisitors .wsmTableContainer table tr td.wsmBrowerOS{ width:70px; } .wsmMetaboxContainer .wsmTableContainer table tr td.wsmIconSet img{ margin-right:6px; } .wsmMetaboxContainer .wsmTableContainer table tr td.wsmIconSet img:last-chid{ margin-right:0; } .wsmMetaboxContainer .wsmTableContainer table.wsmSpanTable tr td{ border-top:0px; } .wsmMetaboxContainer .wsmTableContainer table.wsmSpanTable [rowspan], .wsmMetaboxContainer .wsmTableContainer table.wsmSpanTable [rowspan] ~ th, .wsmMetaboxContainer .wsmTableContainer table.wsmSpanTable [rowspan] ~ td, .wsmMetaboxContainer .wsmTableContainer table.wsmSpanTable tfoot { border-top: 1px solid #ddd; } .wsmMetaboxContainer .wsmTableContainer table.wsmSpanTable tr td.wsmTimeDiff { vertical-align:middle; padding-right:20px; } .wsmMetaboxContainer .wsmTableContainer table.wsmSpanTable tr td.wsmPageTitle{ padding-left:5px; } .wsmMetaboxContainer .wsmTableContainer table tr td.wsmResolution{ width:60px; } .wsmMetaboxContainer .wsmTableContainer table tr td.wsmHits{ width: 110px; background: #e8e6e6; text-align: center; } .wsmMetaboxContainer #wsm_TableTrafficStats.wsmTableContainer{ max-height:none; } .wsmMetaboxContainer #wsm_TableTrafficStats .wsmTableStriped tr th, .wsmMetaboxContainer #wsm_TableTrafficStats .wsmTableStriped tr td{ text-align:center; } .wsmMetaboxContainer #wsm_TableTrafficStats .wsmTableStriped tr td.wsmTimeColumn,.wsmMetaboxContainer #wsm_TableTrafficStats .wsmTableStriped tr th.wsmTimeColumn{ } .wsmMetaboxContainer #wsm_TableTrafficStats .wsmTableStriped tr td.wsmInlineGraph, .wsmMetaboxContainer #wsm_TableTrafficStats .wsmTableStriped tr th.wsmInlineGraph{ text-align:left; vertical-align:middle; } .wsmMetaboxContainer #wsm_TableTrafficStats .wsmTableStriped tr td.wsmInlineGraph table{ padding:0; margin:0; height:20px; } .wsmMetaboxContainer #wsm_TableTrafficStats .wsmTableStriped tr td.wsmInlineGraph table td{ padding:0; margin:0; border:none; height:14px; } .wsmMetaboxContainer #wsm_TableTrafficStats .wsmTableStriped tr td.wsmInlineGraph table td:first-child{ text-align:right; border-right: 1px solid; } .wsmMetaboxContainer #wsm_TableTrafficStats .wsmTableStriped tr td.wsmInlineGraph table td:last-child{ text-align:left; } .wsmMetaboxContainer #wsm_TableTrafficStats .wsmTableStriped tr td div{ color:#808080; } .wsmMetaboxContainer #wsm_TableTrafficStats .wsmTableStriped tr td.wsmInlineGraph div, .wsmMetaboxContainer #wsm_TableTrafficStats .wsmTableStriped tr td.wsmInlineGraph font{ vertical-align:middle; } .wsmMetaboxContainer #wsm_TableTrafficStats .wsmTableStriped tr td.wsmInlineGraph .wsmProgressBar { background: #93b665; border: 0 solid #82a554; border-radius: 2px; box-shadow: 0 1px 1px #fff; display: inline-block; height: 19px; } .wsmMetaboxContainer #wsm_TableTrafficStats .wsmTableStriped tr td.wsmInlineGraph .wsmProgressBar.wsmGreenBack{ background: #93b665; border: 0 solid #82a554; height: 14px; } .wsmMetaboxContainer #wsm_TableTrafficStats .wsmTableStriped tr td.wsmInlineGraph .wsmProgressBar.wsmRedBack{ background: #C00; border: 0 solid #900; height: 14px; } .wsmMetaboxContainer #wsm_TableTrafficStats .wsmTableStriped tr th{ } .wsmMetaboxContainer #wsm_TableTrafficStats .wsmTableStriped tr th.wsmBounceColumn{ } .wsmMetaboxContainer #wsm_TableTrafficStats .wsmTableStriped tr td.wsmTimeColumn, .wsmMetaboxContainer #wsm_TableTrafficStats .wsmTableStriped tr th.wsmTimeColumn, .wsmMetaboxContainer #wsm_TableTrafficStats .wsmTableStriped tr td.wsmCommonColumn{ text-align:left; } .wsmMetaboxContainer .wsmFilterWrapper .wsmRadioTabWrapper{ border-bottom: 1px solid #ddd; position: relative; clear: both; padding: 10px 0 0px 10px; } .wsmbottomWrapper{ border-top: 1px solid #ddd; padding:5px; } .wsmMetaboxContainer .wsmFilterWrapper .wsmMiddleWrapper { padding: 10px 10px 10px 15px; } .wsmMetaboxContainer .wsmFilterWrapper .wsmRadioWrapper{ display: inline-block; padding: 3px 30px 0px 10px; } .wsmMetaboxContainer .wsmFilterWrapper .wsmRadioWrapper input.wsmRadioTab{ margin-top:1px; } .wsmMetaboxContainer .wsmFilterWrapper .wsmRadioWrapper input.wsmRadioTab +label{ margin-right:10px; } .wsmMetaboxContainer .wsmFilterWrapper .wsmRadioTabWrapper input.wsmRadioTab{ display:none; } .wsmMetaboxContainer .wsmFilterWrapper .wsmRadioTabWrapper label{ cursor: pointer; border: 1px solid #aaa; border-bottom: 0; background-color: #fff; margin-right:5px; padding: .5em 1em; position: relative; display:inline-block; } .wsmMetaboxContainer .wsmFilterWrapper .wsmRadioTabWrapper label:hover{ background-color: #eee; } .wsmMetaboxContainer .wsmFilterWrapper .wsmRadioTabWrapper input.wsmRadioTab:checked + label { box-shadow: 0 3px 0 -1px #fff, inset 0 5px 0 -1px #0073aa; background-color: #fff; border-color: #428bca; z-index: 1; } .wsmMetaboxContainer .wsmFilterWrapper .wsmRadioTabWrapper input.wsmRadioTab:checked:before{ display:none; } .wsmMetaboxContainer .vistor_panel_data .wsmAccordian , .wsmMetaboxContainer #wsm_topRefferStatsList .wsmAccordian { transition: 0.4s; text-align: left; border-bottom:1px solid #ddd; padding:10px; font-size:14px; cursor:pointer; } .wsmMetaboxContainer .vistor_panel_data .wsmAccordian:last-child, .wsmMetaboxContainer #wsm_topRefferStatsList .wsmAccordian:last-child{ border-bottom:none; } .wsmMetaboxContainer .vistor_panel_data .wsmAccordian:hover, .wsmMetaboxContainer #wsm_topRefferStatsList .wsmAccordian:hover{ background-color:#f9f9f9; } .wsmMetaboxContainer .vistor_panel_data .wsmAccordian span:first-child, .wsmMetaboxContainer #wsm_topRefferStatsList .wsmAccordian span:first-child{ margin-right: 20px; text-align: right; width: 30px; display: inline-block; } .wsmMetaboxContainer .vistor_panel_data .wsmPanel. .wsmMetaboxContainer #wsm_topRefferStatsList .wsmPanel{ border: 5px #ddd solid; margin-top: 10px; font-size: 12px; display:none; transition: all 0.6s ease-in-out; } .wsmMetaboxContainer .vistor_panel_data .wsmPanel table tr td.wsmIconSet, .wsmMetaboxContainer #wsm_topRefferStatsList .wsmPanel table tr td.wsmIconSet{ width:100px; } .wsmMetaboxContainer .vistor_panel_data.wsmTableContainer, .wsmMetaboxContainer #wsm_topRefferStatsList.wsmTableContainer{ max-height: none; } .wsmMetaboxContainer .vistor_panel_data table th:first-child, .wsmMetaboxContainer #wsm_topRefferStatsList table th:first-child, .wsmMetaboxContainer #wsm_topRefferStatsList table td:first-child{ text-align:right; padding-right:20px; width:60px; } .wsmMetaboxContainer .vistor_panel_data table th:last-child, .wsmMetaboxContainer #wsm_topRefferStatsList table th:last-child, .wsmMetaboxContainer #wsm_topRefferStatsList table td:last-child{ text-align:center; width:60px; } .wsmMetaboxContainer .vistor_panel_data table td:last-child div, .wsmMetaboxContainer #wsm_topRefferStatsList table td:last-child div, .compare_second_result{ color:#808080; } .wsmMetaboxContainer .wsmPageContainer{ text-align:center; padding:0 10px; } .wsmPagination{ list-style:none; font-size:12px; } .wsmPagination li{ display:inline-grid; margin-right:7px; margin-bottom: 0px; } .wsmPagination li:last-child{ margin-right:0px; } .wsmPagination li a{ padding:4px 9px; border:1px solid #efefef; } .wsmPagination li:hover{ background-color:#0073aa; color:#fff; } .wsmPagination li:hover a{ color:#fff; } .wsmPagination li span.wsmCurrent { padding:4px 9px; border:1px solid #efefef; background-color:#0073aa; color:#fff; } .wsmTableContainer .wsmIcon, .wsmMetaboxContainer .wsmIcon{ display:inline-block; width:16px; height:16px; background:url('../images/icons.png') no-repeat; } .wsmIcon.mozillafirefox{ background-position:-112px 0; } .wsmIcon.googlechrome{ background-position:-80px 0; } .wsmIcon.opera{ background-position:-224px 0; } .wsmIcon.internetexplorer,.wsmIcon.microsoftinternetexplorer{ background-position:-144px 0; } .wsmIcon.safari{ background-position:-256px 0; } .wsmIcon.desktop{ background-position:-192px 0; } .wsmIcon.mobile{ background-position:-336px 0; } .wsmIcon.windows, .wsmIcon.windows98{ background-position:-320px 0; } .wsmIcon.linux{ background-position:-176px 0; } .wsmIcon.android{ background-position:0 0; } .wsmIcon.google{ background-position:-128px 0; } .wsmIcon.bing{ background-position:-64px 0; } .wsmIcon.yahoo{ background-position:-304px 0; } .wsmIcon.aol{ background-position:-16px 0; } .wsmIcon.askcom{ background-position:-48px 0; } .wsmIcon.microsoftedge{ background-position:-368px 0; } .wsmIcon.ios, .wsmIcon.mac{ background-position:-32px 0; } /* SPINNER START */ .wsmSpinner { margin: 0 auto; width: 50px; height: 40px; text-align: center; font-size: 10px; } .wsmSpinner > div { background-color: #0073aa; height: 100%; width: 6px; display: inline-block; margin-right: 4px; -webkit-animation: sk-stretchdelay 1.2s infinite ease-in-out; animation: sk-stretchdelay 1.2s infinite ease-in-out; } .wsmSpinner .wsmRect2 { -webkit-animation-delay: -1.1s; animation-delay: -1.1s; } .wsmSpinner .wsmRect3 { -webkit-animation-delay: -1.0s; animation-delay: -1.0s; } .wsmSpinner .wsmRect4 { -webkit-animation-delay: -0.9s; animation-delay: -0.9s; } .wsmSpinner .wsmRect5 { -webkit-animation-delay: -0.8s; animation-delay: -0.8s; margin-right:0px; } .wsmExpandCollapse{ width:15px; height:15px; display:none; } .wsmExpandCollapse.wsmExpand, .wsmReferralRow:hover .wsmExpandCollapse{ display:block; background: url('../images/ui-icons_454545_256x240.png') -130px -192px no-repeat; } .wsmExpandCollapse.wsmCollapse,.wsmReferralRow:hover .wsmExpandCollapse.wsmCollapse{ display:block; background: url('../images/ui-icons_454545_256x240.png') -162px -192px no-repeat; } @-webkit-keyframes sk-stretchdelay { 0%, 40%, 100% { -webkit-transform: scaleY(0.4) } 20% { -webkit-transform: scaleY(1.0) } } @keyframes sk-stretchdelay { 0%, 40%, 100% { transform: scaleY(0.4); -webkit-transform: scaleY(0.4); } 20% { transform: scaleY(1.0); -webkit-transform: scaleY(1.0); } } /* SPINNER END */ @media screen and (max-width: 1000px) { #wpbody-content .wsmMetaboxContainer #dashboard-widgets #wsm-postbox-container-2,#wpbody-content .wsmMetaboxContainer #dashboard-widgets #wsm-postbox-container-3{ width:100%; } } body > #ui-datepicker-div{ display:none; } .vistor_panel_data tr[id^="wsmRowChild_"] .wsmTableStriped, #wsm_topRefferStatsList tr[id^="wsmRowChild_"] .wsmTableStriped { border-left: 1px solid #ccc; float: right; width: 90%; } .vistor_panel_data tr[id^="wsmRowChild_"] .wsmTableStriped td:first-child , #wsm_topRefferStatsList tr[id^="wsmRowChild_"] .wsmTableStriped td:first-child { text-align: center; width: 5%; } .vistor_panel_data tr[id^="wsmRowChild_"] .wsmTableStriped td , #wsm_topRefferStatsList tr[id^="wsmRowChild_"] .wsmTableStriped td { text-align: left; width: 95%; } .vistor_panel_data tr[id^="wsmRowChild_"] div, #wsm_topRefferStatsList tr[id^="wsmRowChild_"] div { text-align: right; } .vistor_panel_data tr[id^="wsmRowChild_"] > td , #wsm_topRefferStatsList tr[id^="wsmRowChild_"] > td { padding: 0 !important; } .vistor_panel_data tr[id^="wsmRowChild_"] .wsmTableStriped tr:first-child td , #wsm_topRefferStatsList tr[id^="wsmRowChild_"] .wsmTableStriped tr:first-child td { border-top: medium none; } .referral_url_history{ padding-left: 10%; } .referral_info_panel, .chart_panel, .referral_url_history_records { border-left: 1px solid #ccc; float: right; width: 100%; position:relative; } .referral_url_history_records { margin-bottom: 20px; } .referral_url_history_records > div{ max-height: 200px; overflow-x: hidden; overflow-y: scroll; border-bottom: 1px solid #ccc; } .referral_url_history_records tr td:first-child { text-align: left !important; } .referral_url_history_records th, .referral_url_history_records td { text-align: center !important; width: 21%; } .referral_url_history_records th:first-child { text-align: left !important; } .wsmMetaboxContainer .wsmTableContainer table tr th { } .referral_url_history_records th { text-align: center !important; } .referral_url_history_records > table { border-left: 1px solid #ccc; } .jqplot-target .jqplot-table-legend { width: auto !important; } .chart_panel .jqplot-table-legend { width: auto !important; } .chart_panel .jqplot-table-legend td { vertical-align: middle !important; padding: 5px !important; } .referral_info_panel td { width: 100px !important; text-align: center !important; vertical-align: middle !important; } .referral_info_panel tr:first-child td { font-weight: bold; font-size: 14px; letter-spacing: 1px; background: #0073aa; color: #fff; } .referral_info_panel td:first-child { font-weight: bold; letter-spacing: 1px; } #dashboard-widgets a, #dashboard-widgets a:active{ outline: none; } .linkRemoveData, .linkRemoveData:hover{ position: absolute; color: #fff; right: 4px; top: 6px; } .single_location_chart .bar_graph, .panelSearchEngineReview .bar_graph { background: green; display: block; float: left; height: 20px; border-radius: 4px; margin-right: 5px; } .single_location_chart .bar_graph{ height:10px } .wsmLocationList .wsmReferralRow > td { padding-bottom: 20px !important; } .wsmLocationList .wsmReferralRow { position: relative; } .single_location_chart { position: absolute; width: 375px; right: 10px; font-size:10px; margin-top:5px; line-height:100%; } .single_location_chart span { float:left } .panelSearchEngineReview td { padding: 5px; } .panelSearchEngineReview td:last-child { text-align: center; } .urlVisitInfo span { text-align: left; padding-right: 30px; float: right; } .urlVisitInfo { text-align: left !important; padding-left: 30px; } .urlVisitInfo span:first-child { float: left; } .wsmMetaboxContainer .vistor_panel_data{ display:none; max-height:none; } .geo_stats_submenu, .stats_submenu { padding:10px; } .geo_stats_submenu a.wsmColorGreen, .geo_stats_submenu a, .stats_submenu a.wsmColorGreen, .stats_submenu a{ outline:none; color:#000 !important; box-shadow:none; } .geo_stats_submenu a.active, .stats_submenu a.active{ color:#0073aa !important; } .vistor_panel_data th:last-child{ width:100px; } .vistor_panel_data td:last-child{ text-align:center; } .vistor_panel_data th:first-child, .vistor_panel_data td:first-child{ text-align:center !important; width:70px; } .wsmMetaboxContainer .wsmSearchKeywords{ max-height:none; } .wsmSearchKeywords .pull-right { font-size: 11px; float: right; } .wsmSearchKeywords .pull-right span{ color:#0073aa } .wsmReferenceList.vistor_panel_data{ display:block; } .postbox-container div.jqplot-table-legend-swatch-outline, .postbox-container table.jqplot-table-legend, .postbox-container table.jqplot-cursor-legend{ border:none; } .wsmLocationList .width_100 { width: 100px; } .wsmLocationList .align_center { text-align: center !important; } .wsmContentURLStats th:nth-child(2) { width: 60%; } .wsmContentURLStats .align_center, .wsmContentURLStats table tr th.align_center{ text-align:center; } .wsmMetaboxContainer .wsmTableContainer.wsmContentURLStats{ max-height:none; } .referral_url_history_records th, .referral_url_history_records td { width: 21% !important; } .traffic_by_url_list_panel .hits_panel { display: inline-block; } .traffic_by_url_list_panel .hits_panel span { color: #0073aa; padding: 0 2px; } .traffic_by_url_list_panel { list-style: inside; padding-left: 10px; } .wsmContentURLStats table th:first-child, .wsmContentURLStats table td:first-child { padding-left: 10px !important; } .wsmContentURLStats .link_url .dashicons { font-size: 10px; font-weight: unset; width: 10px; height: 10px; transform: rotate(45deg); line-height: 10px; } .wsmContentURLStats .dashicons:before { transform: rotate(90deg); color: #ccc; } .wsmContentURLStats .link_url { border: 1px solid #ccc; margin-left: 10px; width: 10px; height: 10px; display: inline-block; vertical-align: middle; } .title_colud_panel li { display: inline-block; padding: 0 5px; } .title_colud_panel { margin: 10px; text-align: center; } .title_colud_panel .wsmTooltipText::after { top:100%; right:50%; margin-top:0; border-color:#555 transparent transparent; display:none; } .title_search_panel { position: absolute; left: 15%; top: 2px; } .title_search_panel .dashicons { position: absolute; right: 4px; top: 4px; } .exclusion_id_form_panel { float: right; margin-right: 50px; margin-top: 70px; border: 1px solid #ccc; border-radius: 4px; padding: 20px; } #tblIPList { width: 50%; border-right: 1px solid #ccc; } #tblIPList td { vertical-align: middle; } #tblIPList tr td:first-child, #tblIPList tr th:first-child{ text-align:center; } .exclusion_id_form_panel input[type="text"] { padding: 5px; margin-right: 10px; width: 150px; } /* * toggle switch */ .switch { position: relative; display: inline-block; width: 50px; height: 28px; } /* Hide default HTML checkbox */ .switch input {display:none;} /* The slider */ .switch .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; -webkit-transition: .4s; transition: .4s; } .switch .slider:before { position: absolute; content: ""; height: 20px; width: 20px; left: 4px; bottom: 4px; background-color: white; -webkit-transition: .4s; transition: .4s; } input:checked + .slider { background-color: #2196F3; } input:focus + .slider { box-shadow: 0 0 1px #2196F3; } input:checked + .slider:before { -webkit-transform: translateX(22px); -ms-transform: translateX(22px); transform: translateX(22px); } /* Rounded sliders */ .slider.round { border-radius: 34px; } .slider.round:before { border-radius: 50%; } .update_message { width: calc( 50% - 40px ); position: absolute; right: 10px; border: 1px solid #ccc; z-index: 9999; top: 10px; padding: 10px; font-weight: 700; line-height: 30px; display:none; } .update_message.updated, .update_message.error { display:block; } .report_list_table td { padding: 5px; } .report_list_table { border: 1px solid #ccc; padding: 10px; } .site_dashboard_widget_panel { border: 1px solid #ccc; padding: 5px; display:none; } .site_dashboard_widget_panel div { background: #ddd none repeat scroll 0 0; border-radius: 4px; cursor: pointer; display: inline-block; margin-bottom: 5px; margin-right: 5px; padding: 5px; } .site_dashboard_widget_panel + table { width: 100%; border:1px solid #ccc; } .site_dashboard_widget_panel + table th { text-align: center; } .site_dashboard_widget_panel + table .site_dashboard_widget_handler, .site_dashboard_widget_panel + table .site_plugin_widget_handler { border: 1px solid #ccc; margin: 0; min-height: 300px; } .site_dashboard_widget_panel + table td { padding: 0; vertical-align:top; width:50%; padding:0 24px 24px 12px; } .site_dashboard_widget_panel + table td:first-child { padding: 0 12px 24px 24px; } .site_plugin_widget_handler li, .site_dashboard_widget_handler li { padding: 10px; margin: 0; background: #ddd; border-top: 1px solid #fff; } .site_plugin_widget_handler li:first-child .site_dashboard_widget_handler li:first-child { border: 0; } .site_plugin_widget_handler i.handle.ui-sortable-handle, .site_dashboard_widget_handler i.handle.ui-sortable-handle { width: 16px; height: 16px; display: block; background-image: url("../images/ui-icons_454545_256x240.png"); background-position: 0px 186px; float: left; margin-top: 4px; margin-right: 5px; background-size: 300px auto; cursor: pointer; } #screen_wise_visitor_stats .inside h2, #country_wise_visitor_stats .inside h2, #os_wise_visitor_stats .inside h2, #city_wise_visitor_stats .inside h2, #browser_wise_visitor_stats .inside h2, #traffic_by_title_stats .inside h2, #referral_website_stats .inside h2, #search_engine_stats .inside h2, #top_search_engine_stats .inside h2, #daily_stats .inside h2{ display:none; } .row_table tr:nth-of-type(odd) { background-color: #f9f9f9; } .row_table td.integer { text-align: right; } .row_table td.integer.first_column { width: 30px; text-align: center; } .row_table td:last-child { width: 30px; } table#city_stats_panel th { text-align: right; } table#city_stats_panel th:nth-child(2) { text-align: left; } .li-section-table table.form-table:not(#generalsettings) { display: none; } .li-section li{ display: inline-block; } .li-section li:before, .li-section li:first-child::before { content: '|'; padding: 0 7px; } .li-section li:first-child::before { content: ''; } .li-section li a{ text-decoration: none; } .li-section li a.active { color: red; } #traffic_by_title_stats .title_search_panel, #traffic_by_title_stats table tr:last-child, #traffic_by_title_stats .link_url { display: none; } #dashboard-widgets .wsm_widget_link { padding-top: 8px; position: absolute; right: 36px; text-align: center; color:#fff; } #dashboard-widgets #traffic_by_title_stats td:nth-child(2) { text-overflow: ellipsis; white-space: nowrap; overflow: hidden; max-width: 0; } #dashboard-widgets #traffic_by_title_stats th:nth-child(4), #dashboard-widgets #traffic_by_title_stats th:nth-child(5), #dashboard-widgets #traffic_by_title_stats td:nth-child(4), #dashboard-widgets #traffic_by_title_stats td:nth-child(5) { display: none; } #dashboard-widgets div[id^=recent_visit_pages_] table.wsmTableStriped td.wsmCityCountry { font-size: 0px; width: 20px; } .form-table .shortcode_panel table tr td { vertical-align: top; padding: 15px 10px !important; } .form-table .shortcode_panel table tr td:nth-child(1) { width: 5%; } .form-table .shortcode_panel table tr td:nth-child(2) { width: 14%; } .form-table .shortcode_panel table tr td:nth-child(3) { width: 34%; } .form-table .shortcode_panel table tr td:nth-child(4) { width: 47%; } .form-table .shortcode_panel table tr th { background: #0073aa; color: white !important; text-align: center !important; } table.myshortcodelist tr td { padding: 0 !important; } .form-table .shortcode_panel table { border-spacing: 0; border-collapse: collapse; background: white; } form-table.myshortcodelist:active{ } .wsmReferralRow a { word-break: break-all; } .greenTxt, ul.wsmUL.wsmGenStats li.greenTxt .wsmH2Number, ul.wsmUL.wsmGenStats li.greenTxt .wsmH2Number a{ color:#017b01; } ul.wmsSubList.sublisthover { background:#f1f1f1; width: auto !important; padding: 8px; display: none; position: absolute; margin-top: 1px; z-index: 999; border: 1px solid #d9d9d9; border-top: none; } ul.wmsSubList.sublisthover li{ border:none !important; display:block; float:none; } ul.wmsSubList.sublisthover li a{ background:transparent !important; border: none !important; padding: 5px !important; bottom: 0 !important; } .wmsTabList li:hover ul.sublisthover{ display:block; position:absolute; } .wmsTabList li:hover ul.sublisthover a:hover, .wmsTabList li ul.sublisthover a:hover{ bottom: 0 !important; } #general_stats_new .inside{ padding:0 !important; } #general_stats_new li{ border-right:none !important; } .panel_data { display: inline-block; text-align: left; margin: 10px; padding: 10px; color: #fff; } .greenClr { background: #65b19f; } .redClr{ background: #e65757; } .blueClr{ background: #4aa2e0; } .violetClr{ background:#7f5ea2; } .wsmCnt { text-align: right; font-size: 18px; } .wsmCnt label { font-size: 14px; } .wsmMetaboxContainer { direction: ltr; } .wsmCenter{ text-align: center; padding: 10px; margin: 0; } .wsmSubRow td a { word-break: break-all; width: 100%; display: inline-block; } span.currenttime { vertical-align: baseline; }</style><style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 0.07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+	<link rel='stylesheet' id='wp-quicklatex-format-css'  href='https://machinelearningspace.com/wp-content/plugins/wp-quicklatex/css/quicklatex-format.css?ver=6.0.3' type='text/css' media='all' />
+<link rel='stylesheet' id='wp-block-library-css'  href='https://machinelearningspace.com/wp-includes/css/dist/block-library/style.min.css?ver=6.0.3' type='text/css' media='all' />
+<style id='global-styles-inline-css' type='text/css'>
+body{--wp--preset--color--black: #000000;--wp--preset--color--cyan-bluish-gray: #abb8c3;--wp--preset--color--white: #ffffff;--wp--preset--color--pale-pink: #f78da7;--wp--preset--color--vivid-red: #cf2e2e;--wp--preset--color--luminous-vivid-orange: #ff6900;--wp--preset--color--luminous-vivid-amber: #fcb900;--wp--preset--color--light-green-cyan: #7bdcb5;--wp--preset--color--vivid-green-cyan: #00d084;--wp--preset--color--pale-cyan-blue: #8ed1fc;--wp--preset--color--vivid-cyan-blue: #0693e3;--wp--preset--color--vivid-purple: #9b51e0;--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple: linear-gradient(135deg,rgba(6,147,227,1) 0%,rgb(155,81,224) 100%);--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan: linear-gradient(135deg,rgb(122,220,180) 0%,rgb(0,208,130) 100%);--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange: linear-gradient(135deg,rgba(252,185,0,1) 0%,rgba(255,105,0,1) 100%);--wp--preset--gradient--luminous-vivid-orange-to-vivid-red: linear-gradient(135deg,rgba(255,105,0,1) 0%,rgb(207,46,46) 100%);--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray: linear-gradient(135deg,rgb(238,238,238) 0%,rgb(169,184,195) 100%);--wp--preset--gradient--cool-to-warm-spectrum: linear-gradient(135deg,rgb(74,234,220) 0%,rgb(151,120,209) 20%,rgb(207,42,186) 40%,rgb(238,44,130) 60%,rgb(251,105,98) 80%,rgb(254,248,76) 100%);--wp--preset--gradient--blush-light-purple: linear-gradient(135deg,rgb(255,206,236) 0%,rgb(152,150,240) 100%);--wp--preset--gradient--blush-bordeaux: linear-gradient(135deg,rgb(254,205,165) 0%,rgb(254,45,45) 50%,rgb(107,0,62) 100%);--wp--preset--gradient--luminous-dusk: linear-gradient(135deg,rgb(255,203,112) 0%,rgb(199,81,192) 50%,rgb(65,88,208) 100%);--wp--preset--gradient--pale-ocean: linear-gradient(135deg,rgb(255,245,203) 0%,rgb(182,227,212) 50%,rgb(51,167,181) 100%);--wp--preset--gradient--electric-grass: linear-gradient(135deg,rgb(202,248,128) 0%,rgb(113,206,126) 100%);--wp--preset--gradient--midnight: linear-gradient(135deg,rgb(2,3,129) 0%,rgb(40,116,252) 100%);--wp--preset--duotone--dark-grayscale: url('#wp-duotone-dark-grayscale');--wp--preset--duotone--grayscale: url('#wp-duotone-grayscale');--wp--preset--duotone--purple-yellow: url('#wp-duotone-purple-yellow');--wp--preset--duotone--blue-red: url('#wp-duotone-blue-red');--wp--preset--duotone--midnight: url('#wp-duotone-midnight');--wp--preset--duotone--magenta-yellow: url('#wp-duotone-magenta-yellow');--wp--preset--duotone--purple-green: url('#wp-duotone-purple-green');--wp--preset--duotone--blue-orange: url('#wp-duotone-blue-orange');--wp--preset--font-size--small: 13px;--wp--preset--font-size--medium: 20px;--wp--preset--font-size--large: 36px;--wp--preset--font-size--x-large: 42px;}.has-black-color{color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-color{color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-color{color: var(--wp--preset--color--white) !important;}.has-pale-pink-color{color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-color{color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-color{color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-color{color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-color{color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-color{color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-color{color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-color{color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-color{color: var(--wp--preset--color--vivid-purple) !important;}.has-black-background-color{background-color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-background-color{background-color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-background-color{background-color: var(--wp--preset--color--white) !important;}.has-pale-pink-background-color{background-color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-background-color{background-color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-background-color{background-color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-background-color{background-color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-background-color{background-color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-background-color{background-color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-background-color{background-color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-background-color{background-color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-background-color{background-color: var(--wp--preset--color--vivid-purple) !important;}.has-black-border-color{border-color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-border-color{border-color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-border-color{border-color: var(--wp--preset--color--white) !important;}.has-pale-pink-border-color{border-color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-border-color{border-color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-border-color{border-color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-border-color{border-color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-border-color{border-color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-border-color{border-color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-border-color{border-color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-border-color{border-color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-border-color{border-color: var(--wp--preset--color--vivid-purple) !important;}.has-vivid-cyan-blue-to-vivid-purple-gradient-background{background: var(--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple) !important;}.has-light-green-cyan-to-vivid-green-cyan-gradient-background{background: var(--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan) !important;}.has-luminous-vivid-amber-to-luminous-vivid-orange-gradient-background{background: var(--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange) !important;}.has-luminous-vivid-orange-to-vivid-red-gradient-background{background: var(--wp--preset--gradient--luminous-vivid-orange-to-vivid-red) !important;}.has-very-light-gray-to-cyan-bluish-gray-gradient-background{background: var(--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray) !important;}.has-cool-to-warm-spectrum-gradient-background{background: var(--wp--preset--gradient--cool-to-warm-spectrum) !important;}.has-blush-light-purple-gradient-background{background: var(--wp--preset--gradient--blush-light-purple) !important;}.has-blush-bordeaux-gradient-background{background: var(--wp--preset--gradient--blush-bordeaux) !important;}.has-luminous-dusk-gradient-background{background: var(--wp--preset--gradient--luminous-dusk) !important;}.has-pale-ocean-gradient-background{background: var(--wp--preset--gradient--pale-ocean) !important;}.has-electric-grass-gradient-background{background: var(--wp--preset--gradient--electric-grass) !important;}.has-midnight-gradient-background{background: var(--wp--preset--gradient--midnight) !important;}.has-small-font-size{font-size: var(--wp--preset--font-size--small) !important;}.has-medium-font-size{font-size: var(--wp--preset--font-size--medium) !important;}.has-large-font-size{font-size: var(--wp--preset--font-size--large) !important;}.has-x-large-font-size{font-size: var(--wp--preset--font-size--x-large) !important;}
+</style>
+<link rel='stylesheet' id='wsm-style-css'  href='https://machinelearningspace.com/wp-content/plugins/wp-stats-manager/css/style.css?ver=1.0.0' type='text/css' media='all' />
+<link rel='stylesheet' id='google-fonts-css'  href='//fonts.googleapis.com/css?family=Roboto%7CRoboto+Condensed%7CRoboto+Slab&#038;ver=6.0.3' type='text/css' media='all' />
+<link rel='stylesheet' id='fontawesome-css'  href='//use.fontawesome.com/releases/v5.1.0/css/all.css?ver=6.0.3' type='text/css' media='all' />
+<link rel='stylesheet' id='style-css'  href='https://machinelearningspace.com/wp-content/themes/DeepMindAI/style.css?ver=0.95834600%201667094247' type='text/css' media='all' />
+<link rel='stylesheet' id='slick-css-css'  href='https://machinelearningspace.com/wp-content/themes/DeepMindAI/assets/src/library/css/slick.css?ver=6.0.3' type='text/css' media='all' />
+<link rel='stylesheet' id='slick-theme-css-css'  href='https://machinelearningspace.com/wp-content/themes/DeepMindAI/assets/src/library/css/slick-theme.css?ver=6.0.3' type='text/css' media='all' />
+<link rel='stylesheet' id='enlighter-local-css'  href='https://machinelearningspace.com/wp-content/plugins/enlighter/resources/EnlighterJS.min.css?ver=3.10.0' type='text/css' media='all' />
+<script type='text/javascript' src='https://machinelearningspace.com/wp-content/plugins/google-analytics-for-wordpress/assets/js/frontend-gtag.min.js?ver=8.9.1' id='monsterinsights-frontend-script-js'></script>
+<script data-cfasync="false" data-wpfc-render="false" type="text/javascript" id='monsterinsights-frontend-script-js-extra'>/* <![CDATA[ */
+var monsterinsights_frontend = {"js_events_tracking":"true","download_extensions":"doc,pdf,ppt,zip,xls,docx,pptx,xlsx","inbound_paths":"[{\"path\":\"\\\/go\\\/\",\"label\":\"affiliate\"},{\"path\":\"\\\/recommend\\\/\",\"label\":\"affiliate\"}]","home_url":"https:\/\/machinelearningspace.com","hash_tracking":"false","ua":"UA-156159628-1","v4_id":""};/* ]]> */
+</script>
+<script type='text/javascript' src='https://machinelearningspace.com/wp-content/plugins/enlighter/resources/mootools-core-yc.js?ver=3.10.0' id='mootools-local-js'></script>
+<script type='text/javascript' src='https://machinelearningspace.com/wp-content/plugins/enlighter/resources/EnlighterJS.min.js?ver=3.10.0' id='enlighter-local-js'></script>
+<script type='text/javascript' src='https://machinelearningspace.com/wp-includes/js/jquery/jquery.min.js?ver=3.6.0' id='jquery-core-js'></script>
+<script>window.console.logger = window.console.log; window.console.log = function(tolog) {if (tolog == null) {return;} if (tolog.indexOf("Migrate is installed") == -1) {console.logger(tolog);} }</script><script type='text/javascript' src='https://machinelearningspace.com/wp-includes/js/jquery/jquery-migrate.min.js?ver=3.3.2' id='jquery-migrate-js'></script>
+<script type='text/javascript' src='https://machinelearningspace.com/wp-content/plugins/wp-quicklatex/js/wp-quicklatex-frontend.js?ver=1.0' id='wp-quicklatex-frontend-js'></script>
+<link rel="https://api.w.org/" href="https://machinelearningspace.com/wp-json/" /><link rel="alternate" type="application/json" href="https://machinelearningspace.com/wp-json/wp/v2/posts/79" /><link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://machinelearningspace.com/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://machinelearningspace.com/wp-includes/wlwmanifest.xml" /> 
+<meta name="generator" content="WordPress 6.0.3" />
+<link rel='shortlink' href='https://machinelearningspace.com/?p=79' />
+<link rel="alternate" type="application/json+oembed" href="https://machinelearningspace.com/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fmachinelearningspace.com%2Fyolov3-tensorflow-2-part-3%2F" />
+<link rel="alternate" type="text/xml+oembed" href="https://machinelearningspace.com/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fmachinelearningspace.com%2Fyolov3-tensorflow-2-part-3%2F&#038;format=xml" />
+<!-- Wordpress Stats Manager -->
+    <script type="text/javascript">
+          var _wsm = _wsm || [];
+           _wsm.push(['trackPageView']);
+           _wsm.push(['enableLinkTracking']);
+           _wsm.push(['enableHeartBeatTimer']);
+          (function() {
+            var u="https://machinelearningspace.com/wp-content/plugins/wp-stats-manager/";
+            _wsm.push(['setUrlReferrer', ""]);
+            _wsm.push(['setTrackerUrl',"https://machinelearningspace.com/?wmcAction=wmcTrack"]);
+            _wsm.push(['setSiteId', "1"]);
+            _wsm.push(['setPageId', "79"]);
+            _wsm.push(['setWpUserId', "0"]);           
+            var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+            g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'js/wsm_new.js'; s.parentNode.insertBefore(g,s);
+          })();
+    </script>
+    <!-- End Wordpress Stats Manager Code --><script type="text/javascript">/* <![CDATA[ */EnlighterJS_Config = {"selector":{"block":"pre.EnlighterJSRAW","inline":"code.EnlighterJSRAW"},"language":"python","theme":"enlighter","indent":1,"hover":"hoverEnabled","showLinenumbers":true,"rawButton":true,"infoButton":true,"windowButton":true,"rawcodeDoubleclick":false,"grouping":true,"cryptex":{"enabled":false,"email":"mail@example.tld"}};!function(){var a=function(a){var b="Enlighter Error: ";console.error?console.error(b+a):console.log&&console.log(b+a)};return window.addEvent?"undefined"==typeof EnlighterJS?void a("Javascript Resources not loaded yet!"):"undefined"==typeof EnlighterJS_Config?void a("Configuration not loaded yet!"):void window.addEvent("domready",function(){EnlighterJS.Util.Init(EnlighterJS_Config.selector.block,EnlighterJS_Config.selector.inline,EnlighterJS_Config)}):void a("MooTools Framework not loaded yet!")}();;/* ]]> */</script>    
+   
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="google-site-verification" content="3AqEFzhTNrRqHwl36SqEOY5rjmw5W4BpyeCmGljIeos" />
+    <meta name="p:domain_verify" content="9236a55a781438314e507117b06fc230"/>
+    
+    <title>Machine Learning Space</title>
+    
+
+</head>
+
+<body>
+
+   <header>
+
+    <div id=top>
+ 
+    </div>
+
+    <div id="slideout-menu">
+        <ul>
+            <li>
+                <a href="https://machinelearningspace.com">Home</a>  <!-- echo site_url('') gives root website -->
+            </li>
+            <li>
+                <a href="https://machinelearningspace.com/blog">Blog</a>
+            </li>
+           
+            <li>
+                <a href="https://machinelearningspace.com/about">About</a>
+            </li>
+            
+            <!--<li>
+                <input type="text" placeholder="Search Here">
+            </li>
+            -->
+        </ul>
+    </div>
+    
+
+
+     <nav>
+
+        <div id="logo-img">
+            <a href="https://machinelearningspace.com">
+                <img src="https://machinelearningspace.com/wp-content/themes/DeepMindAI/img/mls_logo.png" alt="Machine Learning Space">
+            </a>
+        </div>
+        <div id="menu-icon">
+            <i class="fas fa-bars"></i>
+        </div>
+        
+        <ul>
+            <li>
+                <a href="https://machinelearningspace.com" 
+                                        >Home
+                </a>
+            </li>
+            <li>
+                <a href="https://machinelearningspace.com/blog"
+                    class="active"                >Blog</a>
+            </li>
+            
+           
+            <li>
+                <a href="https://machinelearningspace.com/about"
+                                    >About</a>
+            </li>
+            <li>
+                <!--
+                <div id="search-icon">
+                    <i class="fas fa-search"></i>
+                </div>
+                -->
+            </li>
+        
+        </ul>
+    </nav>
+
+    </header>
+    
+    <script type="text/javascript">
+    
+    jQuery(document).ready(function(){
+
+       jQuery('#menu-icon').click(function() {
+                 //alert("Sorry for this inconvenience, this site is under maintenaince., please come back a few moment later");
+                 
+                 if($('#slideout-menu').css('opacity')==1){
+                     $('#slideout-menu').css('opacity','0');
+                     $('#slideout-menu').css('pointerEvents','none');
+                 }
+                 else{
+                      //alert("Sorry for this inconvenience, this site is under maintenaince., please come back a few moment later");
+                  $('#slideout-menu').css('opacity','1');
+                  $('#slideout-menu').css('pointerEvents','auto');
+                    
+                 }
+                 
+    
+       });
+       
+       //Ini untuk search box di header
+       /*jQuery('#search-icon').click(function() {
+           
+           
+           if($('#searchbox').css('top')=='72px'){
+                $('#searchbox').css('top','24px');
+                $('#searchbox').css('pointerEvents','none');
+           }
+           else {
+
+                 $('#searchbox').css('top','72px');
+                 $('#searchbox').css('pointerEvents','auto');
+           }
+           
+   
+       });*/
+    });
+    </script>
+    
+
+<!--
+    <div id="searchbox">
+        <input type="text" placeholder="Search Here">
+    </div>
+-->
+
+    
+
+
+
+            <main>
+      
+    
+     
+
+    <section>
+      <div class="breadcrumb"><a href='https://machinelearningspace.com' rel='nofollow'>Home</a>&nbsp;&nbsp;&#187;&nbsp;&nbsp;<a href='https://machinelearningspace.com/blog' rel='nofollow'>blog</a> &nbsp;&nbsp;&#187;&nbsp;&nbsp; The beginner’s guide to implementing YOLOv3 in TensorFlow 2.0 (part-3)</div>
+    </section>
+
+      <div class="blog_title"><h1>The beginner’s guide to implementing YOLOv3 in TensorFlow 2.0 (part-3)</h1></div>
+      <div class="card-meta-blogpost">
+             Posted by Rahmad Sadli on December 29, 2019 
+                          in  <a href="#"> <a href="https://machinelearningspace.com/category/deep-learning/" rel="category tag">Deep Learning</a>, <a href="https://machinelearningspace.com/category/machine-learning/" rel="category tag">Machine Learning</a>, <a href="https://machinelearningspace.com/category/object-detection/" rel="category tag">Object Detection</a>, <a href="https://machinelearningspace.com/category/python-programming/" rel="category tag">Python Programming</a></a>
+                  </div>
+    <section>
+
+
+    <div id="post-container">
+      <div id="bloglist">
+        <div class="card">
+          
+          <!-- <div class="card-image">
+            <img src="https://machinelearningspace.com/wp-content/uploads/2020/01/val2-518x300.jpg" alt="Card Image">
+          </div>
+          -->
+          
+
+          <div class="card-description">
+            
+<p><div class="responsive-embed-container">
+<iframe width="560" height="315" src="https://www.youtube.com/embed/ZOt1q3aCIIA" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div></p>
+
+
+
+<p><a href="https://machinelearningspace.com/yolov3-tensorflow-2-part-2/">In part 2</a>, we&#8217;ve discovered how to construct the YOLOv3 network.  In this part 3, we&#8217;ll focus on the file <code>yolov3.weights</code>.</p>
+
+
+
+<p>So, what we&#8217;re going to do in part is to load the weights parameters from the file <code>yolov3.weights</code>, then convert them into the TensorFlow 2.0 weights format.  Just to remain you that, the file <code>yolov3.weights</code> contains the pre-trained CNN&#8217;s parameters of YOLOv3.</p>
+
+
+
+<p>To begin with, let&#8217;s take a look at how the YOLOv3 weights are stored.</p>
+
+
+
+<h3 id="understandingtheweightsfile">How YOLOv3&#8217;s weights are stored?</h3>
+
+
+
+<p>The original YOLOv3 weights file <code>yolov3.weights</code>  is a binary file and the weights are stored in the float data type. </p>
+
+
+
+<p>One thing that we need to know that the weights only belong to convolutional layers. As we know, in YOLOv3, there are 2  convolutional layer types, with and without a batch normalization layer. So,  the weights are applied differently for different types of convolutional layers.  Since we&#8217;re reading the only float data, there&#8217;s no clue which one belongs to which layer.  If we incorrectly associate these weights with their layers properly, we&#8217;ll screw up everything, and the weights won&#8217;t be converted. So, that&#8217;s why understanding how the weights are stored is crucially important.  </p>
+
+
+
+<p>Here, I tried to make a simple flowchart in order to describe how the weights are stored. </p>
+
+
+<div class="wp-block-image">
+<figure class="aligncenter size-large is-resized"><img loading="lazy" src="https://machinelearningspace.com/wp-content/uploads/2020/01/weights.jpg" alt="" class="wp-image-529" width="444" height="436" srcset="https://machinelearningspace.com/wp-content/uploads/2020/01/weights.jpg 562w, https://machinelearningspace.com/wp-content/uploads/2020/01/weights-300x295.jpg 300w, https://machinelearningspace.com/wp-content/uploads/2020/01/weights-305x300.jpg 305w" sizes="(max-width: 444px) 100vw, 444px" /></figure></div>
+
+
+<p>When we re-write these weights to TensorFlow&#8217;s format  for a convolutional with a batch normalization layer, we need to switch the position of <code>beta</code> and <code>gamma</code>. So, they&#8217;re ordered like this: <code>beta</code>, <code>gamma</code>, <code>means</code>, <code>variance </code>and <code>conv weights</code>.  However,  the weights&#8217; order remains the same for the convolutional without a batch normalization layer.</p>
+
+
+
+<p>All right!!, Now we&#8217;re ready to code the weights converter. </p>
+
+
+
+<p>Without further ado, let&#8217;s do it&#8230;</p>
+
+
+
+<h3>Working with the file <code>convert_weights.py</code></h3>
+
+
+
+<p>Open the file <code>convert_weights.py</code>, then copy and paste the following code to the top of it. Here, we import NumPy library and the two functions that we&#8217;ve created previously in part 2, <code>YOLOv3Net</code> and <code>parse_cfg</code>.</p>
+
+
+
+<pre class="EnlighterJSRAW" data-enlighter-language="python" data-enlighter-theme="atomic" data-enlighter-highlight="" data-enlighter-linenumbers="" data-enlighter-lineoffset="1" data-enlighter-title="" data-enlighter-group="">#convert_weights.py
+import numpy as np
+from yolov3 import YOLOv3Net
+from yolov3 import parse_cfg</pre>
+
+
+
+<p>Now, let&#8217;s create a function called <code>load_weights()</code>. This function has 3 parameters, <code>model</code>, <code>cfgfile</code>, and <code>weightfile</code>. The parameter <code>model</code> is a returning parameters of the network&#8217;s model after calling the function <code>YOLOv3Net</code>.  The<code>cfgfile</code> and <code>weightfile</code> are respectively refer to the files <code>yolov3.cfg</code> and <code>yolov3.weights</code>.</p>
+
+
+
+<pre class="EnlighterJSRAW" data-enlighter-language="python" data-enlighter-theme="atomic" data-enlighter-highlight="" data-enlighter-linenumbers="" data-enlighter-lineoffset="6" data-enlighter-title="" data-enlighter-group="">def load_weights(model,cfgfile,weightfile):</pre>
+
+
+
+<p>Open the file  <code>yolov3.weights</code> and read the first 5 values. These values are the header information. So, we can skip them all.<br></p>
+
+
+
+<pre class="EnlighterJSRAW" data-enlighter-language="python" data-enlighter-theme="atomic" data-enlighter-highlight="" data-enlighter-linenumbers="" data-enlighter-lineoffset="7" data-enlighter-title="" data-enlighter-group="">    # Open the weights file
+    fp = open(weightfile, "rb")
+
+    # The first 5 values are header information
+    np.fromfile(fp, dtype=np.int32, count=5)</pre>
+
+
+
+<p>Then call <code>parse_cfg()</code> function.</p>
+
+
+
+<pre class="EnlighterJSRAW" data-enlighter-language="python" data-enlighter-theme="atomic" data-enlighter-highlight="" data-enlighter-linenumbers="" data-enlighter-lineoffset="14" data-enlighter-title="" data-enlighter-group="">    blocks = parse_cfg(cfgfile)</pre>
+
+
+
+<p>As we did when building the YOLOv3 network, we need to loop over the <code>blocks</code> and search for the convolutional layer. Don&#8217;t forget to check whether the convolutional is with batch normalization or not. If it is true, go get the relevant values (<code>gamma</code>, <code>beta</code>, <code>means</code>, and <code>variance</code>), and re-arrange them to the TensorFlow weights order. Otherwise, take the bias values. After that take the convolutional weights and set these weights to the convolutional layer depending on the convolutional type.</p>
+
+
+
+<pre class="EnlighterJSRAW" data-enlighter-language="python" data-enlighter-theme="atomic" data-enlighter-highlight="" data-enlighter-linenumbers="" data-enlighter-lineoffset="16" data-enlighter-title="" data-enlighter-group="">    for i, block in enumerate(blocks[1:]):
+
+        if (block["type"] == "convolutional"):
+            conv_layer = model.get_layer('conv_' + str(i))
+            print("layer: ",i+1,conv_layer)
+
+            filters = conv_layer.filters
+            k_size = conv_layer.kernel_size[0]
+            in_dim = conv_layer.input_shape[-1]
+
+            if "batch_normalize" in block:
+
+                norm_layer = model.get_layer('bnorm_' + str(i))
+                print("layer: ",i+1,norm_layer)
+                size = np.prod(norm_layer.get_weights()[0].shape)
+
+                bn_weights = np.fromfile(fp, dtype=np.float32, count=4 * filters)
+                # tf [gamma, beta, mean, variance]
+                bn_weights = bn_weights.reshape((4, filters))[[1, 0, 2, 3]]
+
+            else:
+                conv_bias = np.fromfile(fp, dtype=np.float32, count=filters)
+
+            # darknet shape (out_dim, in_dim, height, width)
+            conv_shape = (filters, in_dim, k_size, k_size)
+            conv_weights = np.fromfile(
+                fp, dtype=np.float32, count=np.product(conv_shape))
+            # tf shape (height, width, in_dim, out_dim)
+            conv_weights = conv_weights.reshape(
+                conv_shape).transpose([2, 3, 1, 0])
+
+            if "batch_normalize" in block:
+                norm_layer.set_weights(bn_weights)
+                conv_layer.set_weights([conv_weights])
+            else:
+                conv_layer.set_weights([conv_weights, conv_bias])</pre>
+
+
+
+<p>Alert if the reading has failed. Then, close the file whether the reading was successful or not.</p>
+
+
+
+<pre class="EnlighterJSRAW" data-enlighter-language="python" data-enlighter-theme="atomic" data-enlighter-highlight="" data-enlighter-linenumbers="" data-enlighter-lineoffset="53" data-enlighter-title="" data-enlighter-group="">    assert len(fp.read()) == 0, 'failed to read all data'
+    fp.close()</pre>
+
+
+
+<p>The last part of this code is the main function. Copy and paste the following code of the main function just right after the function <code>load_weights()</code>. </p>
+
+
+
+<pre class="EnlighterJSRAW" data-enlighter-language="python" data-enlighter-theme="atomic" data-enlighter-highlight="" data-enlighter-linenumbers="" data-enlighter-lineoffset="57" data-enlighter-title="" data-enlighter-group="">def main():
+
+    weightfile = "weights/yolov3.weights"
+    cfgfile = "cfg/yolov3.cfg"
+
+    model_size = (416, 416, 3)
+    num_classes = 80
+
+    model=YOLOv3Net(cfgfile,model_size,num_classes)
+    load_weights(model,cfgfile,weightfile)
+
+    try:
+        model.save_weights('weights/yolov3_weights.tf')
+        print('\nThe file \'yolov3_weights.tf\' has been saved successfully.')
+    except IOError:
+        print("Couldn't write the file \'yolov3_weights.tf\'.")</pre>
+
+
+
+<p>Here is the complete code for the  <code>convert_weights.py</code> </p>
+
+
+
+<pre class="EnlighterJSRAW" data-enlighter-language="generic" data-enlighter-theme="atomic" data-enlighter-highlight="" data-enlighter-linenumbers="" data-enlighter-lineoffset="" data-enlighter-title="" data-enlighter-group="">#convert_weights.py
+import numpy as np
+from yolov3 import YOLOv3Net
+from yolov3 import parse_cfg
+
+def load_weights(model,cfgfile,weightfile):
+    # Open the weights file
+    fp = open(weightfile, "rb")
+
+    # Skip 5 header values
+    np.fromfile(fp, dtype=np.int32, count=5)
+
+    # The rest of the values are the weights
+    blocks = parse_cfg(cfgfile)
+
+    for i, block in enumerate(blocks[1:]):
+
+        if (block["type"] == "convolutional"):
+            conv_layer = model.get_layer('conv_' + str(i))
+            print("layer: ",i+1,conv_layer)
+
+            filters = conv_layer.filters
+            k_size = conv_layer.kernel_size[0]
+            in_dim = conv_layer.input_shape[-1]
+
+            if "batch_normalize" in block:
+
+                norm_layer = model.get_layer('bnorm_' + str(i))
+                print("layer: ",i+1,norm_layer)
+                size = np.prod(norm_layer.get_weights()[0].shape)
+
+                bn_weights = np.fromfile(fp, dtype=np.float32, count=4 * filters)
+                # tf [gamma, beta, mean, variance]
+                bn_weights = bn_weights.reshape((4, filters))[[1, 0, 2, 3]]
+
+            else:
+                conv_bias = np.fromfile(fp, dtype=np.float32, count=filters)
+
+            # darknet shape (out_dim, in_dim, height, width)
+            conv_shape = (filters, in_dim, k_size, k_size)
+            conv_weights = np.fromfile(
+                fp, dtype=np.float32, count=np.product(conv_shape))
+            # tf shape (height, width, in_dim, out_dim)
+            conv_weights = conv_weights.reshape(
+                conv_shape).transpose([2, 3, 1, 0])
+
+            if "batch_normalize" in block:
+                norm_layer.set_weights(bn_weights)
+                conv_layer.set_weights([conv_weights])
+            else:
+                conv_layer.set_weights([conv_weights, conv_bias])
+
+    assert len(fp.read()) == 0, 'failed to read all data'
+    fp.close()
+
+
+def main():
+
+    weightfile = "weights/yolov3.weights"
+    cfgfile = "cfg/yolov3.cfg"
+
+    model_size = (416, 416, 3)
+    num_classes = 80
+
+    model=YOLOv3Net(cfgfile,model_size,num_classes)
+    load_weights(model,cfgfile,weightfile)
+
+    try:
+        model.save_weights('weights/yolov3_weights.tf')
+        print('\nThe file \'yolov3_weights.tf\' has been saved successfully.')
+    except IOError:
+        print("Couldn't write the file \'yolov3_weights.tf\'.")
+
+
+if __name__ == '__main__':
+    main()</pre>
+
+
+
+<p>Finally, we can now execute the  <code>convert_weights.py</code> file . Open  Anaconda prompt or terminal in Pycharm, type the following command and press Enter.</p>
+
+
+
+<pre class="EnlighterJSRAW" data-enlighter-language="generic" data-enlighter-theme="" data-enlighter-highlight="" data-enlighter-linenumbers="false" data-enlighter-lineoffset="" data-enlighter-title="" data-enlighter-group="">python convert_weights.py</pre>
+
+
+
+<p>Here is the output, I printed all the convolutional layers just to make sure that the weights are loaded correctly until the last convolutional layer.</p>
+
+
+<div class="wp-block-image">
+<figure class="aligncenter size-full"><img loading="lazy" width="1089" height="937" src="https://machinelearningspace.com/wp-content/uploads/2020/01/conv_weights-3.png" alt="" class="wp-image-592" srcset="https://machinelearningspace.com/wp-content/uploads/2020/01/conv_weights-3.png 1089w, https://machinelearningspace.com/wp-content/uploads/2020/01/conv_weights-3-300x258.png 300w, https://machinelearningspace.com/wp-content/uploads/2020/01/conv_weights-3-1024x881.png 1024w, https://machinelearningspace.com/wp-content/uploads/2020/01/conv_weights-3-768x661.png 768w, https://machinelearningspace.com/wp-content/uploads/2020/01/conv_weights-3-349x300.png 349w" sizes="(max-width: 1089px) 100vw, 1089px" /></figure></div>
+
+
+<p>If you use PyCharm, look at the Project Navigation on the left side as I pointed with the red boxes, you have 4 new files:</p>
+
+
+
+<ul><li>checkpoint</li><li>yolov3_weights.tf.data-00000-of-00002</li><li>yolov3_weights.tf.data-00001-of-00002</li><li>yolov3_weights.tf.index</li></ul>
+
+
+
+<p>Those files are the TensorFlow 2.0 weights format. So, anytime we want to use them, just simply call them like the only one file,  <code>yolov3_weights.tf</code>. We&#8217;ll see how to do this in the last part of this tutorial. </p>
+
+
+<div class="wp-block-image">
+<figure class="aligncenter size-full"><img loading="lazy" width="1357" height="819" src="https://machinelearningspace.com/wp-content/uploads/2020/01/conv_weights_2.png" alt="" class="wp-image-594" srcset="https://machinelearningspace.com/wp-content/uploads/2020/01/conv_weights_2.png 1357w, https://machinelearningspace.com/wp-content/uploads/2020/01/conv_weights_2-300x181.png 300w, https://machinelearningspace.com/wp-content/uploads/2020/01/conv_weights_2-1024x618.png 1024w, https://machinelearningspace.com/wp-content/uploads/2020/01/conv_weights_2-768x464.png 768w, https://machinelearningspace.com/wp-content/uploads/2020/01/conv_weights_2-497x300.png 497w" sizes="(max-width: 1357px) 100vw, 1357px" /></figure></div>
+
+
+<p>This is the end of part 3, and we still have several things to do, those are: </p>
+
+
+
+<ul><li>creating a pipeline to read the input image or video/camera, </li><li>computing the prediction, </li><li>and drawing the bounding boxes prediction over the input image/video/camera. </li></ul>
+
+
+
+<p>Those are what we will be doing soon in the <a href="https://machinelearningspace.com/yolov3-tensorflow-2-part-4/">last part</a>. Let&#8217;s go into it&#8230;</p>
+
+
+
+<h2>Parts</h2>
+
+
+
+<ul>
+<li><p><a href="https://machinelearningspace.com/yolov3-tensorflow-2-part-1/">Part-1, An introduction of the YOLOv3 algorithm.</a></p>
+</li>
+<li><p><a href="https://machinelearningspace.com/yolov3-tensorflow-2-part--2/">Part-2, Parsing the YOLOv3 configuration file and creating the YOLOv3 network.</a></p>
+</li>
+<li><p><a href="https://machinelearningspace.com/yolov3-tensorflow-2-part-3/">Part-3, Converting the YOLOv3 pre-trained weights into the TensorFlow 2.0 weights format.</a></p>
+</li>
+<li><p><a href="https://machinelearningspace.com/yolov3-tensorflow-2-part-4/">Part-4, Encoding bounding boxes and testing this implementation with images and videos. </a></p>
+</li>
+</ul>
+          </div>
+        </div>
+
+
+
+        <!-- Comment section -->
+        
+        
+        <div id="comments-section">
+
+        	<div id="respond" class="comment-respond">
+		<h3 id="reply-title" class="comment-reply-title">Leave a Reply <small><a rel="nofollow" id="cancel-comment-reply-link" href="/yolov3-tensorflow-2-part-3/#respond" style="display:none;">Cancel reply</a></small></h3><form action="https://machinelearningspace.com/wp-comments-post.php" method="post" id="commentform" class="comment-form" novalidate><p class="comment-notes">Your email address will not be published. All fields are required</p><textarea placeholder="Your Comment" id="comment" name="comment" cols="45" rows="8" aria-required="true"></textarea><input placeholder="Name" id="author" name="author" type="text" value="" size="30" />
+<input placeholder="Email" id="email" name="email" type="text" value="" size="30" />
+<p class="form-submit"><input name="submit" type="submit" id="submit" class="submit" value="Post Comment" /> <input type='hidden' name='comment_post_ID' value='79' id='comment_post_ID' />
+<input type='hidden' name='comment_parent' id='comment_parent' value='0' />
+</p></form>	</div><!-- #respond -->
+	          		<div class="comments">
+          			<h3>What others say</h3>
+	          		<ol class="all-comments">
+	          					<li id="comment-53" class="comment even thread-even depth-1 parent">
+			<article id="div-comment-53" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/03d7d82f2bbbeb12a180df142acc8a1f?s=32&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/03d7d82f2bbbeb12a180df142acc8a1f?s=64&#038;d=mm&#038;r=g 2x' class='avatar avatar-32 photo' height='32' width='32' loading='lazy'/>						<b class="fn">Alexander</b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://machinelearningspace.com/yolov3-tensorflow-2-part-3/#comment-53"><time datetime="2020-04-19T18:03:08+02:00">April 19, 2020 at 6:03 pm</time></a>					</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Hi, I have tried to execute the  &#8220;convert_weights.py&#8221; but it gave me the error:<br />
+&#8220;can&#8217;t multiply sequence by non-int of the type &#8216;Tensor'&#8221; referring to the line: &#8220;box_centers = (box_centers + cxy) * strides&#8221; in the &#8220;yolov3.py&#8221;.<br />
+Do you have any suggestion? In my opinion it makes sense that a multiplication between a Tensor and a Tuple is not allowed, but I whould like to know how it is possible to solve it. Thank you.</p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='#comment-53' data-commentid="53" data-postid="79" data-belowelement="div-comment-53" data-respondelement="respond" data-replyto="Reply to Alexander" aria-label='Reply to Alexander'>Reply</a></div>			</article><!-- .comment-body -->
+		<ul class="children">
+		<li id="comment-54" class="comment byuser comment-author-rahmadsadli bypostauthor odd alt depth-2">
+			<article id="div-comment-54" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/a27bb97fae65679ed0778644bcf5da9e?s=32&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/a27bb97fae65679ed0778644bcf5da9e?s=64&#038;d=mm&#038;r=g 2x' class='avatar avatar-32 photo' height='32' width='32' loading='lazy'/>						<b class="fn">rahmadsadli</b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://machinelearningspace.com/yolov3-tensorflow-2-part-3/#comment-54"><time datetime="2020-04-19T19:01:19+02:00">April 19, 2020 at 7:01 pm</time></a>					</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Hi, If you run the code from my Github repo, normally you won&#8217;t have this issue.<br />
+Can you please give me detailed info of your system (eg; OS, TensorFlow&#8217;s version, anaconda, etc)</p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='#comment-54' data-commentid="54" data-postid="79" data-belowelement="div-comment-54" data-respondelement="respond" data-replyto="Reply to rahmadsadli" aria-label='Reply to rahmadsadli'>Reply</a></div>			</article><!-- .comment-body -->
+		</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+		<li id="comment-61" class="comment even thread-odd thread-alt depth-1">
+			<article id="div-comment-61" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/03d7d82f2bbbeb12a180df142acc8a1f?s=32&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/03d7d82f2bbbeb12a180df142acc8a1f?s=64&#038;d=mm&#038;r=g 2x' class='avatar avatar-32 photo' height='32' width='32' loading='lazy'/>						<b class="fn">Alexander</b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://machinelearningspace.com/yolov3-tensorflow-2-part-3/#comment-61"><time datetime="2020-04-20T09:26:51+02:00">April 20, 2020 at 9:26 am</time></a>					</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>I was using Python 3.6 instead of 3.7 as you suggested, I guess this was the problem. Now it works, thank you very much for the support!</p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='#comment-61' data-commentid="61" data-postid="79" data-belowelement="div-comment-61" data-respondelement="respond" data-replyto="Reply to Alexander" aria-label='Reply to Alexander'>Reply</a></div>			</article><!-- .comment-body -->
+		</li><!-- #comment-## -->
+		<li id="comment-64" class="comment odd alt thread-even depth-1">
+			<article id="div-comment-64" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/ad82da372bb099221457ec4e354fdd03?s=32&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/ad82da372bb099221457ec4e354fdd03?s=64&#038;d=mm&#038;r=g 2x' class='avatar avatar-32 photo' height='32' width='32' loading='lazy'/>						<b class="fn">Ankit</b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://machinelearningspace.com/yolov3-tensorflow-2-part-3/#comment-64"><time datetime="2020-04-29T18:14:17+02:00">April 29, 2020 at 6:14 pm</time></a>					</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>I am getting this error when I am trying to use your repo with my customed trained Yolov3:<br />
+line 38, in parse_cfg<br />
+key, value = line.split(&#8220;=&#8221;)<br />
+ValueError: too many values to unpack (expected 2)</p>
+<p>Can you please help me out?</p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='#comment-64' data-commentid="64" data-postid="79" data-belowelement="div-comment-64" data-respondelement="respond" data-replyto="Reply to Ankit" aria-label='Reply to Ankit'>Reply</a></div>			</article><!-- .comment-body -->
+		</li><!-- #comment-## -->
+		<li id="comment-67" class="comment even thread-odd thread-alt depth-1">
+			<article id="div-comment-67" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/8686428cdc48dfee2bfaadafe20c8d35?s=32&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/8686428cdc48dfee2bfaadafe20c8d35?s=64&#038;d=mm&#038;r=g 2x' class='avatar avatar-32 photo' height='32' width='32' loading='lazy'/>						<b class="fn">Hrushikesh</b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://machinelearningspace.com/yolov3-tensorflow-2-part-3/#comment-67"><time datetime="2020-05-03T14:20:43+02:00">May 3, 2020 at 2:20 pm</time></a>					</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Hi,<br />
+I am trying to run YOLO on different YOLO dataset other than COCO.<br />
+Can you please let me know what will be the changes in the .weights function if the cfg exists for that dataset</p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='#comment-67' data-commentid="67" data-postid="79" data-belowelement="div-comment-67" data-respondelement="respond" data-replyto="Reply to Hrushikesh" aria-label='Reply to Hrushikesh'>Reply</a></div>			</article><!-- .comment-body -->
+		</li><!-- #comment-## -->
+		<li id="comment-87" class="comment odd alt thread-even depth-1">
+			<article id="div-comment-87" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/90f6e899ba666d32219b8a600c42d3e7?s=32&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/90f6e899ba666d32219b8a600c42d3e7?s=64&#038;d=mm&#038;r=g 2x' class='avatar avatar-32 photo' height='32' width='32' loading='lazy'/>						<b class="fn">Hitesh</b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://machinelearningspace.com/yolov3-tensorflow-2-part-3/#comment-87"><time datetime="2020-07-06T11:28:16+02:00">July 6, 2020 at 11:28 am</time></a>					</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Hi I got this error while running convert_weight.py code</p>
+<p>  File &#8220;C:\Users\Hitesh\anaconda3\lib\site-packages\tensorflow\python\keras\engine\network.py&#8221;, line 522, in get_layer<br />
+    raise ValueError(&#8216;No such layer: &#8216; + name)</p>
+<p>ValueError: No such layer: conv_0</p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='#comment-87' data-commentid="87" data-postid="79" data-belowelement="div-comment-87" data-respondelement="respond" data-replyto="Reply to Hitesh" aria-label='Reply to Hitesh'>Reply</a></div>			</article><!-- .comment-body -->
+		</li><!-- #comment-## -->
+		<li id="comment-88" class="comment even thread-odd thread-alt depth-1">
+			<article id="div-comment-88" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/90f6e899ba666d32219b8a600c42d3e7?s=32&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/90f6e899ba666d32219b8a600c42d3e7?s=64&#038;d=mm&#038;r=g 2x' class='avatar avatar-32 photo' height='32' width='32' loading='lazy'/>						<b class="fn">Hitesh</b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://machinelearningspace.com/yolov3-tensorflow-2-part-3/#comment-88"><time datetime="2020-07-07T05:41:31+02:00">July 7, 2020 at 5:41 am</time></a>					</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Hi,I got error<br />
+  File &#8220;C:\Users\Hitesh\anaconda3\lib\site-packages\tensorflow\python\keras\engine\network.py&#8221;, line 522, in get_layer<br />
+    raise ValueError(&#8216;No such layer: &#8216; + name)</p>
+<p>ValueError: No such layer: conv_0<br />
+how to solved it.Please give me suggestion.</p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='#comment-88' data-commentid="88" data-postid="79" data-belowelement="div-comment-88" data-respondelement="respond" data-replyto="Reply to Hitesh" aria-label='Reply to Hitesh'>Reply</a></div>			</article><!-- .comment-body -->
+		</li><!-- #comment-## -->
+		<li id="comment-89" class="comment odd alt thread-even depth-1">
+			<article id="div-comment-89" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/45dba2553d35b2121fbb84105cdc7cb9?s=32&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/45dba2553d35b2121fbb84105cdc7cb9?s=64&#038;d=mm&#038;r=g 2x' class='avatar avatar-32 photo' height='32' width='32' loading='lazy'/>						<b class="fn"><a href='https://www.xn--42c9bsq2d4f7a2a.com/' rel='external nofollow ugc' class='url'>ปั้มไลค์</a></b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://machinelearningspace.com/yolov3-tensorflow-2-part-3/#comment-89"><time datetime="2020-07-09T12:39:45+02:00">July 9, 2020 at 12:39 pm</time></a>					</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Like!! Really appreciate you sharing this blog post.Really thank you! Keep writing.</p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='#comment-89' data-commentid="89" data-postid="79" data-belowelement="div-comment-89" data-respondelement="respond" data-replyto="Reply to ปั้มไลค์" aria-label='Reply to ปั้มไลค์'>Reply</a></div>			</article><!-- .comment-body -->
+		</li><!-- #comment-## -->
+		<li id="comment-90" class="comment even thread-odd thread-alt depth-1">
+			<article id="div-comment-90" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/3f9d371508978fa2e22f6ba28e255da2?s=32&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/3f9d371508978fa2e22f6ba28e255da2?s=64&#038;d=mm&#038;r=g 2x' class='avatar avatar-32 photo' height='32' width='32' loading='lazy'/>						<b class="fn"><a href='https://www.facebook.com/alcoholwipes75/' rel='external nofollow ugc' class='url'>ทิชชู่เปียกแอลกอฮอล์</a></b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://machinelearningspace.com/yolov3-tensorflow-2-part-3/#comment-90"><time datetime="2020-07-09T12:41:09+02:00">July 9, 2020 at 12:41 pm</time></a>					</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>I like the valuable information you provide in your articles.</p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='#comment-90' data-commentid="90" data-postid="79" data-belowelement="div-comment-90" data-respondelement="respond" data-replyto="Reply to ทิชชู่เปียกแอลกอฮอล์" aria-label='Reply to ทิชชู่เปียกแอลกอฮอล์'>Reply</a></div>			</article><!-- .comment-body -->
+		</li><!-- #comment-## -->
+		<li id="comment-91" class="comment odd alt thread-even depth-1">
+			<article id="div-comment-91" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/4f7b3db0e6746c87f6d26af72647a10a?s=32&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/4f7b3db0e6746c87f6d26af72647a10a?s=64&#038;d=mm&#038;r=g 2x' class='avatar avatar-32 photo' height='32' width='32' loading='lazy'/>						<b class="fn"><a href='https://www.facebook.com/maskfilterpm2.5/' rel='external nofollow ugc' class='url'>กรองหน้ากากอนามัย</a></b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://machinelearningspace.com/yolov3-tensorflow-2-part-3/#comment-91"><time datetime="2020-07-09T12:42:17+02:00">July 9, 2020 at 12:42 pm</time></a>					</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>I like the valuable information you provide in your articles.</p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='#comment-91' data-commentid="91" data-postid="79" data-belowelement="div-comment-91" data-respondelement="respond" data-replyto="Reply to กรองหน้ากากอนามัย" aria-label='Reply to กรองหน้ากากอนามัย'>Reply</a></div>			</article><!-- .comment-body -->
+		</li><!-- #comment-## -->
+		<li id="comment-92" class="comment even thread-odd thread-alt depth-1">
+			<article id="div-comment-92" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/3affcc55ea4467c56233ffb71f9c347d?s=32&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/3affcc55ea4467c56233ffb71f9c347d?s=64&#038;d=mm&#038;r=g 2x' class='avatar avatar-32 photo' height='32' width='32' loading='lazy'/>						<b class="fn"><a href='https://www.xn--42cf0d2aefsl0a2a1srf.com/' rel='external nofollow ugc' class='url'>เบอร์สวยมงคล</a></b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://machinelearningspace.com/yolov3-tensorflow-2-part-3/#comment-92"><time datetime="2020-07-09T12:43:27+02:00">July 9, 2020 at 12:43 pm</time></a>					</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Thanks for fantastic info I was looking for this info for my mission.</p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='#comment-92' data-commentid="92" data-postid="79" data-belowelement="div-comment-92" data-respondelement="respond" data-replyto="Reply to เบอร์สวยมงคล" aria-label='Reply to เบอร์สวยมงคล'>Reply</a></div>			</article><!-- .comment-body -->
+		</li><!-- #comment-## -->
+		<li id="comment-93" class="comment odd alt thread-even depth-1">
+			<article id="div-comment-93" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/58d2f522ffcf4ff702f638ed3beb7802?s=32&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/58d2f522ffcf4ff702f638ed3beb7802?s=64&#038;d=mm&#038;r=g 2x' class='avatar avatar-32 photo' height='32' width='32' loading='lazy'/>						<b class="fn"><a href='https://www.sms.in.th/' rel='external nofollow ugc' class='url'>SMS</a></b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://machinelearningspace.com/yolov3-tensorflow-2-part-3/#comment-93"><time datetime="2020-07-09T12:45:06+02:00">July 9, 2020 at 12:45 pm</time></a>					</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Thanks so much for the blog post.</p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='#comment-93' data-commentid="93" data-postid="79" data-belowelement="div-comment-93" data-respondelement="respond" data-replyto="Reply to SMS" aria-label='Reply to SMS'>Reply</a></div>			</article><!-- .comment-body -->
+		</li><!-- #comment-## -->
+		<li id="comment-372" class="comment even thread-odd thread-alt depth-1 parent">
+			<article id="div-comment-372" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/8db397b5bda616bfa2b707a403ed46ed?s=32&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/8db397b5bda616bfa2b707a403ed46ed?s=64&#038;d=mm&#038;r=g 2x' class='avatar avatar-32 photo' height='32' width='32' loading='lazy'/>						<b class="fn">Venkat Alapati</b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://machinelearningspace.com/yolov3-tensorflow-2-part-3/#comment-372"><time datetime="2020-08-19T09:38:23+02:00">August 19, 2020 at 9:38 am</time></a>					</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Hi, I have tried to execute the “convert_weights.py” but it gave me the error:<br />
+“can’t multiply sequence by non-int of the type ‘Tensor&#8217;” referring to the line: “box_centers = (box_centers + cxy) * strides” in the “yolov3.py”.<br />
+Do you have any suggestion? In my opinion it makes sense that a multiplication between a Tensor and a Tuple is not allowed, but I whould like to know how it is possible to solve it. Thank you.</p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='#comment-372' data-commentid="372" data-postid="79" data-belowelement="div-comment-372" data-respondelement="respond" data-replyto="Reply to Venkat Alapati" aria-label='Reply to Venkat Alapati'>Reply</a></div>			</article><!-- .comment-body -->
+		<ul class="children">
+		<li id="comment-375" class="comment byuser comment-author-rahmadsadli bypostauthor odd alt depth-2">
+			<article id="div-comment-375" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/a27bb97fae65679ed0778644bcf5da9e?s=32&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/a27bb97fae65679ed0778644bcf5da9e?s=64&#038;d=mm&#038;r=g 2x' class='avatar avatar-32 photo' height='32' width='32' loading='lazy'/>						<b class="fn">rahmadsadli</b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://machinelearningspace.com/yolov3-tensorflow-2-part-3/#comment-375"><time datetime="2020-08-19T21:47:09+02:00">August 19, 2020 at 9:47 pm</time></a>					</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Hi, normally, this code works perfectly using Python 3.7 and Tensorflow 2.0 and 2.1.<br />
+Just take a look at your Python version. Good luck!</p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='#comment-375' data-commentid="375" data-postid="79" data-belowelement="div-comment-375" data-respondelement="respond" data-replyto="Reply to rahmadsadli" aria-label='Reply to rahmadsadli'>Reply</a></div>			</article><!-- .comment-body -->
+		</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+		<li id="comment-395" class="comment even thread-even depth-1 parent">
+			<article id="div-comment-395" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/8666e21969728c64b0cdbb09f58d46a4?s=32&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/8666e21969728c64b0cdbb09f58d46a4?s=64&#038;d=mm&#038;r=g 2x' class='avatar avatar-32 photo' height='32' width='32' loading='lazy'/>						<b class="fn">RS</b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://machinelearningspace.com/yolov3-tensorflow-2-part-3/#comment-395"><time datetime="2020-08-27T19:21:19+02:00">August 27, 2020 at 7:21 pm</time></a>					</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Hi,<br />
+I get the following error:<br />
+(py3.7.7_tf2_yolo_venv) D:\Technical\Dev\CV\Object_Detection\YOLO\YOLOv3_TF2&gt;python convert_weights.py<br />
+Traceback (most recent call last):<br />
+  File &#8220;convert_weights.py&#8221;, line 20, in<br />
+    from yolov3 import YOLOv3Net<br />
+  File &#8220;D:\Technical\Dev\CV\Object_Detection\YOLO\YOLOv3_TF2\yolov3.py&#8221;, line 25, in<br />
+    tf.config.experimental.set_memory_growth(physical_devices[0], True)<br />
+IndexError: list index out of range</p>
+<p>Details of the Environment:<br />
+****************************<br />
+python = 3.7.7<br />
+opencv =  4.4.0<br />
+tensorflow =  2.1.0</p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='#comment-395' data-commentid="395" data-postid="79" data-belowelement="div-comment-395" data-respondelement="respond" data-replyto="Reply to RS" aria-label='Reply to RS'>Reply</a></div>			</article><!-- .comment-body -->
+		<ul class="children">
+		<li id="comment-401" class="comment byuser comment-author-rahmadsadli bypostauthor odd alt depth-2">
+			<article id="div-comment-401" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/a27bb97fae65679ed0778644bcf5da9e?s=32&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/a27bb97fae65679ed0778644bcf5da9e?s=64&#038;d=mm&#038;r=g 2x' class='avatar avatar-32 photo' height='32' width='32' loading='lazy'/>						<b class="fn">rahmadsadli</b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://machinelearningspace.com/yolov3-tensorflow-2-part-3/#comment-401"><time datetime="2020-08-28T15:18:23+02:00">August 28, 2020 at 3:18 pm</time></a>					</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Hi, it means you don&#8217;t have a GPU card installed on you computer.<br />
+Just make those lines as comments like this:</p>
+<p>&#8220;&#8221;&#8221;<br />
+physical_devices = tf.config.experimental.list_physical_devices(&#8216;GPU&#8217;)<br />
+assert len(physical_devices) > 0, &#8220;Not enough GPU hardware devices available&#8221;<br />
+tf.config.experimental.set_memory_growth(physical_devices[0], True)<br />
+&#8220;&#8221;&#8221;</p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='#comment-401' data-commentid="401" data-postid="79" data-belowelement="div-comment-401" data-respondelement="respond" data-replyto="Reply to rahmadsadli" aria-label='Reply to rahmadsadli'>Reply</a></div>			</article><!-- .comment-body -->
+		</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+		<li id="comment-446" class="comment even thread-odd thread-alt depth-1">
+			<article id="div-comment-446" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/0bb535472b6066e0726a63fb86e545c4?s=32&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/0bb535472b6066e0726a63fb86e545c4?s=64&#038;d=mm&#038;r=g 2x' class='avatar avatar-32 photo' height='32' width='32' loading='lazy'/>						<b class="fn">vishnu</b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://machinelearningspace.com/yolov3-tensorflow-2-part-3/#comment-446"><time datetime="2020-08-31T23:55:04+02:00">August 31, 2020 at 11:55 pm</time></a>					</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Hello, When I am trying to convert the weights after training with my own dataset, I am getting the following error, please help me in resolving this. My input image size is 608 * 608 * 3</p>
+<p>ERROR :<br />
+Traceback (most recent call last):<br />
+  File &#8220;convert_weights.py&#8221;, line 55, in<br />
+    main()<br />
+  File &#8220;convert_weights.py&#8221;, line 48, in main<br />
+    load_weights(model,cfgfile,weightfile)<br />
+  File &#8220;convert_weights.py&#8221;, line 34, in load_weights<br />
+    conv_shape).transpose([2, 3, 1, 0])<br />
+ValueError: cannot reshape array of size 264248 into shape (256,128,3,3)</p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='#comment-446' data-commentid="446" data-postid="79" data-belowelement="div-comment-446" data-respondelement="respond" data-replyto="Reply to vishnu" aria-label='Reply to vishnu'>Reply</a></div>			</article><!-- .comment-body -->
+		</li><!-- #comment-## -->
+		<li id="comment-896" class="comment odd alt thread-even depth-1">
+			<article id="div-comment-896" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/avatar/d88a6c4f57970972f23aef4a2a79f0f2?s=32&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/d88a6c4f57970972f23aef4a2a79f0f2?s=64&#038;d=mm&#038;r=g 2x' class='avatar avatar-32 photo' height='32' width='32' loading='lazy'/>						<b class="fn">Sumana</b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://machinelearningspace.com/yolov3-tensorflow-2-part-3/#comment-896"><time datetime="2021-01-06T19:31:29+01:00">January 6, 2021 at 7:31 pm</time></a>					</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Hi,<br />
+Firstly, thank you for this blog. This is helpful. I have been reading about YOLOv3 for sometime now. This is the best tutorial I have found. Thank you. Please keep writing.</p>
+<p>I am trying to run this in Spyder(python 3.7).<br />
+I have this error. Please help.</p>
+<p>runfile(&#8216;D:/YOLO/YOLOv3_TF2/convert_weights.py&#8217;, wdir=&#8217;D:/YOLO/YOLOv3_TF2&#8242;)<br />
+Reloaded modules: yolov3<br />
+Traceback (most recent call last):</p>
+<p>  File &#8220;D:\YOLO\YOLOv3_TF2\convert_weights.py&#8221;, line 62, in<br />
+    main()</p>
+<p>  File &#8220;D:\YOLO\YOLOv3_TF2\convert_weights.py&#8221;, line 53, in main<br />
+    model=YOLOv3Net(cfgfile,model_size,num_classes)</p>
+<p>  File &#8220;D:\YOLO\YOLOv3_TF2\yolov3.py&#8221;, line 22, in YOLOv3Net<br />
+    blocks = parse_cfg(cfgfile)</p>
+<p>  File &#8220;D:\YOLO\YOLOv3_TF2\yolov3.py&#8221;, line 17, in parse_cfg<br />
+    key, value = line.split(&#8220;=&#8221;)</p>
+<p>ValueError: not enough values to unpack (expected 2, got 1)</p>
+<p>Thank you,<br />
+Sumana</p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='#comment-896' data-commentid="896" data-postid="79" data-belowelement="div-comment-896" data-respondelement="respond" data-replyto="Reply to Sumana" aria-label='Reply to Sumana'>Reply</a></div>			</article><!-- .comment-body -->
+		</li><!-- #comment-## -->
+	          		</ol>
+          		</div>
+
+          	            
+        </div>
+
+
+
+	  	
+      </div>
+
+  	
+      <aside id="sidebar">
+        <li id="search-3" class="widget widget_search"><form method="get" action=" https://machinelearningspace.com ">
+	<input type="search" name="s" placeholder="Search here..." value=" ">
+	<input type="submit" id="search-btn" value="">
+</form></li>
+
+		<li id="recent-posts-3" class="widget widget_recent_entries">
+		<h3>Recent Posts</h3>
+		<ul>
+											<li>
+					<a href="https://machinelearningspace.com/2d-object-tracking-using-kalman-filter/">Object Tracking: 2-D Object Tracking using Kalman Filter in Python</a>
+									</li>
+											<li>
+					<a href="https://machinelearningspace.com/object-tracking-python/">Object Tracking: Simple Implementation of Kalman Filter in Python</a>
+									</li>
+											<li>
+					<a href="https://machinelearningspace.com/introduction-to-arti%ef%ac%81cial-neural-networks-anns/">Introduction to Artiﬁcial Neural Networks (ANNs)</a>
+									</li>
+											<li>
+					<a href="https://machinelearningspace.com/sentiment-analysis-tensorflow/">Sentiment Analysis Using Keras Embedding Layer in TensorFlow 2.0</a>
+									</li>
+											<li>
+					<a href="https://machinelearningspace.com/yolov3-tensorflow-2-part-4/">The beginner’s guide to implementing YOLOv3 in TensorFlow 2.0 (part-4)</a>
+									</li>
+					</ul>
+
+		</li>
+<li id="categories-3" class="widget widget_categories"><h3>Categories</h3>
+			<ul>
+					<li class="cat-item cat-item-2"><a href="https://machinelearningspace.com/category/deep-learning/">Deep Learning</a>
+</li>
+	<li class="cat-item cat-item-4"><a href="https://machinelearningspace.com/category/machine-learning/">Machine Learning</a>
+</li>
+	<li class="cat-item cat-item-5"><a href="https://machinelearningspace.com/category/natural-language-processing/">Natural Language Processing</a>
+</li>
+	<li class="cat-item cat-item-6"><a href="https://machinelearningspace.com/category/object-detection/">Object Detection</a>
+</li>
+	<li class="cat-item cat-item-18"><a href="https://machinelearningspace.com/category/object-tracking/">Object Tracking</a>
+</li>
+	<li class="cat-item cat-item-3"><a href="https://machinelearningspace.com/category/python-programming/">Python Programming</a>
+</li>
+			</ul>
+
+			</li>
+        
+      </aside>
+    </div> 
+    </section>
+    
+      <footer class="site-footer footer-newsletter">
+<div class="footer-newsletter-inside">
+<hr class="thick">
+<h2>Stay up to date</h2>
+<p>I bring you my best articles and ideas about Deep learning and computer programming. So, a good start is to sign up for my blog and you will get be informed if any new article comes up, so that you won't miss any valuable article. 
+</p>
+<div id="footer-form-wrap">
+<form action="" method="post" id="mc-embedded-subscribe-form">
+<div class="subwrap">
+<div class="inner-sub">
+<div class="submarine">
+<div class="porthole"></div>
+<div class="porthole"></div>
+<div class="fin"></div>
+<div class="fin lower"></div>
+<div class="periscope"></div>
+<div class="prop"></div>
+<label for="mce-EMAIL" class="screen-reader">Email Address</label>
+<input type="email" name="EMAIL" class="required email mailchimp-email-input" id="mce-EMAIL" placeholder=" " required="">
+<div class="inner"></div>
+</div>
+<div class="btnwrap">
+<b>
+<span>Subscribe</span>
+</b>
+<input type="submit" value="Subscribe" name="Subscribe" id="mc-embedded-subscribe" class="button subscribe-button">
+</div>
+</div>
+</div>
+</form>
+</div>
+
+<!--
+<div class="social-links">
+<a href="https://www.facebook.com/rahmad.sadli.56/" class="social-link-facebook">
+<strong>Facebook</strong>
+<span>@RahmadSadli</span>
+</a>
+<a href="https://twitter.com/RahmadSadli" class="social-link-twitter">
+<strong>Twitter</strong>
+<span>@RahmadSadli</span>
+</a>
+<a href="https://www.youtube.com/user/RahmadSadli" class="social-link-youtube">
+<strong>YouTube</strong>
+<span>@RahmadSadli</span>
+</a>
+<a href="https://www.instagram.com/RahmadSadli/" class="social-link-instagram">
+<strong>Instagram</strong>
+<span>@RahmadSadli</span>
+</a>
+<a href="https://css-tricks.com/feed/" class="social-link-rss">
+<strong>RSS</strong>
+<span>Feed</span>
+</a>
+</div>
+-->
+
+
+</div>
+</footer>
+
+<footer class="site-footer footer-subsites">
+<div class="footer-subsite footer-subsite-conferences bold-underline-links">
+<div id="left-footer">    
+<span class="presents"><h3><strong>Quick</strong> Links</h3></span>
+<ul>
+    <li>
+        <a href="https://machinelearningspace.com">Home</a>
+    </li>
+    <li>
+        <a href="https://machinelearningspace.com/blog">Blog</a>
+    </li>
+    <li>
+        <a href="https://machinelearningspace.com/about">About</a>
+    </li>
+
+    <!--<li>
+        <a href="https://machinelearningspace.com/contact">Contact</a>
+    </li>-->
+</ul>
+</div>
+</div>
+<div class="footer-subsite footer-subsite-serverless bold-underline-links">
+<span class="presents"><h3><strong>Follow me</strong> on</h3></span>
+ <div id="social-media-footer">
+    <!-- <div id="footer-subsite">-->
+    <ul>
+        <!--
+        <li>
+            <a href="https://www.facebook.com/rahmad.sadli.56/">
+                <i class="fab fa-facebook"></i>
+            </a>
+        </li>
+        -->
+        <li>
+            <a href="https://www.youtube.com/channel/UCoIm7z1fvncR-m3lOZn7UzQ">
+                <i class="fab fa-youtube"></i>
+            </a>
+        </li>
+        <li>
+            <a href="https://github.com/RahmadSadli">
+                <i class="fab fa-github"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+</footer>
+
+
+<!--<footer id="footer_deepmindai">
+
+<div class="footcenter">
+    @2019 Developed by DeepMindAI
+</div>
+            
+</footer>
+-->
+
+<div id="footer_deepmindai">
+    <h3>@2019 MachineLearningSpace</h3>
+</div>
+
+</main>
+
+    <script type="text/javascript">
+        jQuery(function(){
+        var arrLiveStats=[];
+        var WSM_PREFIX="wsm";
+		
+        jQuery(".if-js-closed").removeClass("if-js-closed").addClass("closed");
+                var wsmFnSiteLiveStats=function(){
+                           jQuery.ajax({
+                               type: "POST",
+                               url: wsm_ajaxObject.ajax_url,
+                               data: { action: 'liveSiteStats', requests: JSON.stringify(arrLiveStats), r: Math.random() }
+                           }).done(function( strResponse ) {
+                                if(strResponse!="No"){
+                                    arrResponse=JSON.parse(strResponse);
+                                    jQuery.each(arrResponse, function(key,value){
+                                    
+                                        $element= document.getElementById(key);
+                                        oldValue=parseInt($element.getAttribute("data-value").replace(/,/g, ""));
+                                        diff=parseInt(value.replace(/,/g, ""))-oldValue;
+                                        $class="";
+                                        
+                                        if(diff>=0){
+                                            diff="+"+diff;
+                                        }else{
+                                            $class="wmcRedBack";
+                                        }
+
+                                        $element.setAttribute("data-value",value);
+                                        $element.innerHTML=diff;
+                                        jQuery("#"+key).addClass($class).show().siblings(".wsmH2Number").text(value);
+                                        
+                                        if(key=="SiteUserOnline")
+                                        {
+                                            var onlineUserCnt = arrResponse.wsmSiteUserOnline;
+                                            if(jQuery("#wsmSiteUserOnline").length)
+                                            {
+                                                jQuery("#wsmSiteUserOnline").attr("data-value",onlineUserCnt);   jQuery("#wsmSiteUserOnline").next(".wsmH2Number").html("<a target=\"_blank\" href=\"?page=wsm_traffic&subPage=UsersOnline&subTab=summary\">"+onlineUserCnt+"</a>");
+                                            }
+                                        }
+                                    });
+                                    setTimeout(function() {
+                                        jQuery.each(arrResponse, function(key,value){
+                                            jQuery("#"+key).removeClass("wmcRedBack").hide();
+                                        });
+                                    }, 1500);
+                                }
+                           });
+                       }
+                       if(arrLiveStats.length>0){
+                          setInterval(wsmFnSiteLiveStats, 10000);
+                       }});
+        </script>    
+    
+</body>
+
+</html><!--
+
+    <aside id="sidebar">
+        <h3>Sidebar Heading</h3>
+        <p>Sidebar 1</p>
+      </aside>
+    </div> -->
+<!-- WP Fastest Cache file was created in 0.63390111923218 seconds, on 30-10-22 2:44:08 -->

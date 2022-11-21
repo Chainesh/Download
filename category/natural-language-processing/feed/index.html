@@ -1,0 +1,533 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>Natural Language Processing &#8211; Machine Learning Space</title>
+	<atom:link href="https://machinelearningspace.com/category/natural-language-processing/feed/" rel="self" type="application/rss+xml" />
+	<link>https://machinelearningspace.com</link>
+	<description>A space for learning machine learning</description>
+	<lastBuildDate>Fri, 06 Mar 2020 08:17:05 +0000</lastBuildDate>
+	<language>en-US</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=6.1.1</generator>
+	<item>
+		<title>Sentiment Analysis Using Keras Embedding Layer in TensorFlow 2.0</title>
+		<link>https://machinelearningspace.com/sentiment-analysis-tensorflow/?utm_source=rss&#038;utm_medium=rss&#038;utm_campaign=sentiment-analysis-tensorflow</link>
+					<comments>https://machinelearningspace.com/sentiment-analysis-tensorflow/#comments</comments>
+		
+		<dc:creator><![CDATA[rahmadsadli]]></dc:creator>
+		<pubDate>Sat, 25 Jan 2020 12:35:34 +0000</pubDate>
+				<category><![CDATA[Deep Learning]]></category>
+		<category><![CDATA[Machine Learning]]></category>
+		<category><![CDATA[Natural Language Processing]]></category>
+		<category><![CDATA[Python Programming]]></category>
+		<category><![CDATA[Keras Embedding]]></category>
+		<category><![CDATA[NLP]]></category>
+		<category><![CDATA[Sentiment Analysis]]></category>
+		<category><![CDATA[TensorFlow 2]]></category>
+		<category><![CDATA[TensorFlow 2.0]]></category>
+		<category><![CDATA[Word Embeddings]]></category>
+		<guid isPermaLink="false">https://machinelearningspace.com/?p=935</guid>
+
+					<description><![CDATA[<p>The sentiment analysis is a process of gaining an understanding of the people's or consumers' emotions or opinions about a product, service, person, or idea.  By understanding consumers' opinions, producers can enhance the quality of their products or services to meet the needs of their customers. </p>
+<p>The post <a rel="nofollow" href="https://machinelearningspace.com/sentiment-analysis-tensorflow/">Sentiment Analysis Using Keras Embedding Layer in TensorFlow 2.0</a> appeared first on <a rel="nofollow" href="https://machinelearningspace.com">Machine Learning Space</a>.</p>
+]]></description>
+										<content:encoded><![CDATA[
+<p>Learn How to Solve Sentiment Analysis Problem With Keras Embedding Layer and Tensorflow</p>
+
+
+
+<figure class="wp-block-image size-full"><img decoding="async" width="2560" height="1554" src="https://machinelearningspace.com/wp-content/uploads/2020/01/HeadImg-1-scaled.jpg" alt="NLP" class="wp-image-987" srcset="https://machinelearningspace.com/wp-content/uploads/2020/01/HeadImg-1-scaled.jpg 2560w, https://machinelearningspace.com/wp-content/uploads/2020/01/HeadImg-1-300x182.jpg 300w, https://machinelearningspace.com/wp-content/uploads/2020/01/HeadImg-1-1024x622.jpg 1024w, https://machinelearningspace.com/wp-content/uploads/2020/01/HeadImg-1-768x466.jpg 768w, https://machinelearningspace.com/wp-content/uploads/2020/01/HeadImg-1-1536x933.jpg 1536w, https://machinelearningspace.com/wp-content/uploads/2020/01/HeadImg-1-2048x1243.jpg 2048w, https://machinelearningspace.com/wp-content/uploads/2020/01/HeadImg-1-494x300.jpg 494w" sizes="(max-width: 2560px) 100vw, 2560px" /></figure>
+
+
+
+<h2>Introduction</h2>
+
+
+
+<p>Text classification, one of the fundamental tasks in Natural Language Processing, is a process of assigning predefined categories data to&nbsp;textual documents such as reviews, articles, tweets, blogs, etc. </p>
+
+
+
+<p>One of the special cases of text classification is sentiment analysis.</p>
+
+
+
+<p>The sentiment analysis is a process of gaining an understanding of the people&#8217;s or consumers&#8217; emotions or opinions about a product, service, person, or idea.  By understanding consumers&#8217; opinions, producers can enhance the quality of their products or services to meet the needs of their customers. </p>
+
+
+
+<p>Sentiment can be classified into binary classification (positive or negative), and multi-class classification (3 or more classes, e.g., negative, neutral and positive).</p>
+
+
+
+<p>In this tutorial, we are going to learn how to perform a simple sentiment analysis using TensorFlow by leveraging Keras Embedding layer. For the purpose of this tutorial, we&#8217;re going to use a case of Amazon&#8217;s reviews. </p>
+
+
+
+<p>This is the list what we are going to do in this tutorial:</p>
+
+
+
+<ul><li>Load the Amazon reviews data, then take randomly 20% of the data as our dataset. From this 20%, we&#8217;ll be dividing it again randomly to training data (70%) and validation data ( 30%). </li><li>Perform preprocessing including removing punctuation,  numbers, and single characters; and converting the upper cases to the lower cases,  so that the model can learn it easily.</li><li>Convert all text in corpus into sequences of words by using the Keras Tokenizer API.</li><li>Create and train a Deep Learning model to classify the sentiments using Keras Embedding layer.</li><li>Validate the model.</li></ul>
+
+
+
+<p>Here is a straightforward guide to implementing it. Let&#8217;s get started!. </p>
+
+
+
+<h2>Data preparation</h2>
+
+
+
+<h3>Step1: Download the amazon reviews data from Kaggle</h3>
+
+
+
+<p>For the purpose of this tutorial, we&#8217;re going to use the Kaggle&#8217;s dataset of amazon reviews that can be downloaded from this <a href="https://www.kaggle.com/bittlingmayer/amazonreviews">link.</a> If you want to work with google collab you can upload this dataset to your Google drive. </p>
+
+
+
+<p>First of all, verify the installed TensorFlow 2.x in your colab notebook. If it exists, select it, otherwise upgrade TensorFlow.</p>
+
+
+
+<pre class="EnlighterJSRAW" data-enlighter-language="python" data-enlighter-theme="atomic" data-enlighter-highlight="" data-enlighter-linenumbers="" data-enlighter-lineoffset="" data-enlighter-title="" data-enlighter-group="">try:
+    %tensorflow_version 2.x
+except:    
+    !pip install --upgrade tensorflow</pre>
+
+
+
+<p>Then, mount your Google drive with the following code:</p>
+
+
+
+<pre class="EnlighterJSRAW" data-enlighter-language="python" data-enlighter-theme="atomic" data-enlighter-highlight="" data-enlighter-linenumbers="" data-enlighter-lineoffset="" data-enlighter-title="" data-enlighter-group="">from google.colab import drive
+drive.mount('/content/drive')</pre>
+
+
+
+<p>Run the code and your output will be something like this: </p>
+
+
+
+<div class="wp-block-image"><figure class="aligncenter size-full"><img decoding="async" loading="lazy" width="912" height="183" src="https://machinelearningspace.com/wp-content/uploads/2020/02/drive.png" alt="" class="wp-image-1193" srcset="https://machinelearningspace.com/wp-content/uploads/2020/02/drive.png 912w, https://machinelearningspace.com/wp-content/uploads/2020/02/drive-300x60.png 300w, https://machinelearningspace.com/wp-content/uploads/2020/02/drive-768x154.png 768w, https://machinelearningspace.com/wp-content/uploads/2020/02/drive-550x110.png 550w" sizes="(max-width: 912px) 100vw, 912px" /></figure></div>
+
+
+
+<p>Click on the link provided as shown in the figure above, then authorize the connection, you will be given a code, copy and paste it to the box &#8220;<code>Enter your authorization code:</code>&#8220;, then press Enter. Now, you are normally in the Google drive directory.</p>
+
+
+
+<p>Here is my Google drive, (just for example). I uploaded the file <code>amazonreviews.zip</code> to the NLP folder in my Google drive.</p>
+
+
+
+<div class="wp-block-image"><figure class="aligncenter size-full"><img decoding="async" loading="lazy" width="442" height="300" src="https://machinelearningspace.com/wp-content/uploads/2020/01/drive2.png" alt="Sentiment Analysis: google drive" class="wp-image-1057" srcset="https://machinelearningspace.com/wp-content/uploads/2020/01/drive2.png 442w, https://machinelearningspace.com/wp-content/uploads/2020/01/drive2-300x204.png 300w" sizes="(max-width: 442px) 100vw, 442px" /></figure></div>
+
+
+
+<p>Point to the path where your  <code>amazonreviews.zip</code> file is located. Mine is like in the following:</p>
+
+
+
+<pre class="EnlighterJSRAW" data-enlighter-language="python" data-enlighter-theme="atomic" data-enlighter-highlight="" data-enlighter-linenumbers="" data-enlighter-lineoffset="" data-enlighter-title="" data-enlighter-group="">%cd drive/My\ Drive/NLP</pre>
+
+
+
+<p>Unzip the <code>amazonreviews.zip</code> file and decompress it.</p>
+
+
+
+<pre class="EnlighterJSRAW" data-enlighter-language="python" data-enlighter-theme="atomic" data-enlighter-highlight="" data-enlighter-linenumbers="" data-enlighter-lineoffset="" data-enlighter-title="" data-enlighter-group="">!unzip amazonreviews.zip</pre>
+
+
+
+<p>The <code>amazonreviews.zip</code> file contains two compressed files, <code>train.ft.txt.bz2</code> and  <code>test.ft.txt.bz2</code>. </p>
+
+
+
+<p>In this tutorial, we&#8217;re going to use only the <code>train.ft.txt.bz2</code> file.  So just  decompress this file using the following command, then you will have a <code>.txt</code> file, that is<code>train.ft.txt</code>. </p>
+
+
+
+<pre class="EnlighterJSRAW" data-enlighter-language="python" data-enlighter-theme="atomic" data-enlighter-highlight="" data-enlighter-linenumbers="" data-enlighter-lineoffset="" data-enlighter-title="" data-enlighter-group="">!bzip2 -d train.ft.txt.bz2</pre>
+
+
+
+<p>Now, we&#8217;re going to open the <code>train.ft.txt</code> file. To do so, use the following code:</p>
+
+
+
+<pre class="EnlighterJSRAW" data-enlighter-language="python" data-enlighter-theme="atomic" data-enlighter-highlight="" data-enlighter-linenumbers="" data-enlighter-lineoffset="" data-enlighter-title="" data-enlighter-group="">with open('train.ft.txt', 'r') as file:
+    lines = file.readlines()</pre>
+
+
+
+<p>First, let&#8217;s take a look at the contents of the <code>train.ft.txt</code> file.</p>
+
+
+
+<div class="wp-block-image"><figure class="aligncenter size-full"><img decoding="async" loading="lazy" width="1414" height="623" src="https://machinelearningspace.com/wp-content/uploads/2020/01/print_txt0-1.png" alt="Sentiment Analysis: Amazon Reviews data" class="wp-image-1061" srcset="https://machinelearningspace.com/wp-content/uploads/2020/01/print_txt0-1.png 1414w, https://machinelearningspace.com/wp-content/uploads/2020/01/print_txt0-1-300x132.png 300w, https://machinelearningspace.com/wp-content/uploads/2020/01/print_txt0-1-1024x451.png 1024w, https://machinelearningspace.com/wp-content/uploads/2020/01/print_txt0-1-768x338.png 768w, https://machinelearningspace.com/wp-content/uploads/2020/01/print_txt0-1-550x242.png 550w" sizes="(max-width: 1414px) 100vw, 1414px" /></figure></div>
+
+
+
+<p>As you can observe from the above figure, the beginnings of the lines are the labels followed by the reviews. The file contains only two review labels, <code>_label__2</code> and <code>__label_1</code> for the <em>positive </em>and <em>negative</em>, respectively. </p>
+
+
+
+<p>So far, we&#8217;re doing good. Let&#8217;s go ahead.</p>
+
+
+
+<h3>Step2: Data Preprocessing</h3>
+
+
+
+<p>Since our data source is data with <code>.txt</code> format,  I prefer to convert it to a Pandas&#8217; data frame.  So, the first step of this data preparation is to convert the <code>.txt</code> data to the Pandas&#8217; data frame format. </p>
+
+
+
+<h4>Converting Data to Pandas Data Frame</h4>
+
+
+
+<p>To do so, I will start it by importing Pandas and creating a Pandas&#8217; data frame <code>DF_text_data</code> as follows:</p>
+
+
+
+<pre class="EnlighterJSRAW" data-enlighter-language="python" data-enlighter-theme="atomic" data-enlighter-highlight="" data-enlighter-linenumbers="false" data-enlighter-lineoffset="" data-enlighter-title="" data-enlighter-group=""># create a dataframe
+import pandas as pd
+DF_text_data = pd.DataFrame()
+</pre>
+
+
+
+<p>Now, we&#8217;re going to loop over the <code>lines</code> using the variable <code>line</code>. Then, we&#8217;ll separate the labels and the reviews from the <code>line</code> and store them to the Pandas&#8217; data frame <code>DF_text_data</code> with different columns.</p>
+
+
+
+<p>Anytime we loop over the <code>lines</code>,  we convert text labels to numerical labels. Since this review is a binary case problem, i.e., <em>negative </em>and <em>positive </em>reviews, so we can easily convert these labels by replacing all the labels  <code>__label__2</code> to <code>1s</code> and all the labels  <code>__label__1</code> to <code>0s</code>. </p>
+
+
+
+<p>Here is the code for doing this:</p>
+
+
+
+<pre class="EnlighterJSRAW" data-enlighter-language="python" data-enlighter-theme="atomic" data-enlighter-highlight="" data-enlighter-linenumbers="" data-enlighter-lineoffset="" data-enlighter-title="" data-enlighter-group="">texts=[]
+labels=[]
+for line in lines:
+    line=line.split()
+    labels.append(1) if line[0] =="__label__2" else labels.append(0)
+    texts.append(" ".join(line[1:]))
+
+DF_text_data['reviews'] = texts
+DF_text_data['labels'] = labels</pre>
+
+
+
+<p>If we print <code>DF_text_data</code>, you will see something like in the following figure. The data consists of 3 columns, they are indexes, reviews and labels.</p>
+
+
+
+<div class="wp-block-image"><figure class="aligncenter size-large is-resized"><img decoding="async" loading="lazy" src="https://machinelearningspace.com/wp-content/uploads/2020/01/print_txt3.png" alt="Sentiment Analysis: Amazon reviews" class="wp-image-1064" width="465" height="355" srcset="https://machinelearningspace.com/wp-content/uploads/2020/01/print_txt3.png 769w, https://machinelearningspace.com/wp-content/uploads/2020/01/print_txt3-300x229.png 300w, https://machinelearningspace.com/wp-content/uploads/2020/01/print_txt3-392x300.png 392w" sizes="(max-width: 465px) 100vw, 465px" /></figure></div>
+
+
+
+<p>As you can see, the index is started from 0 to 3.599.999, meaning this dataset contains 3.6M reviews and labels. This is a big dataset, by the way. If you have a good computer resource, you could just use them all, otherwise, we&#8217;ll be using a small part of it, let&#8217;s say 2 percent of it. To do so, check this code: </p>
+
+
+
+<pre class="EnlighterJSRAW" data-enlighter-language="python" data-enlighter-theme="atomic" data-enlighter-highlight="" data-enlighter-linenumbers="" data-enlighter-lineoffset="" data-enlighter-title="" data-enlighter-group="">from sklearn import model_selection
+
+_, X_data,_, y_data = \
+    model_selection.train_test_split(DF_text_data['reviews'], 
+                                     DF_text_data['labels'], test_size=0.02)
+</pre>
+
+
+
+<p>The <code>X_data</code> now only contains 72K reviews and labels.</p>
+
+
+
+<h3>Data cleaning</h3>
+
+
+
+<p>Before we can go deeper into analyzing, we need to do data cleaning, including removing punctuation, numbers, and single characters; and converting the upper cases to the lower cases, so that the model can learn the data easily.  </p>
+
+
+
+<p>The following is the function for this purpose:</p>
+
+
+
+<pre class="EnlighterJSRAW" data-enlighter-language="python" data-enlighter-theme="atomic" data-enlighter-highlight="" data-enlighter-linenumbers="" data-enlighter-lineoffset="" data-enlighter-title="" data-enlighter-group="">def preprocess(in_text):
+    # If we have html tags, remove them by this way:
+    #out_text = remove_tags(in_text)
+
+    # Remove punctuations and numbers
+    out_text = re.sub('[^a-zA-Z]', ' ', in_text)
+    # Convert upper case to lower case
+    out_text="".join(list(map(lambda x:x.lower(),out_text)))
+    # Remove single character
+    out_text = re.sub(r"\s+[a-zA-Z]\s+", ' ', out_text)
+    return out_text</pre>
+
+
+
+<p>Now, perform the preprocessing by calling the <code>preprocess </code>function.</p>
+
+
+
+<pre class="EnlighterJSRAW" data-enlighter-language="python" data-enlighter-theme="atomic" data-enlighter-highlight="" data-enlighter-linenumbers="" data-enlighter-lineoffset="" data-enlighter-title="" data-enlighter-group="">#Performing preprocessing
+import re
+
+text_data=[]
+for review in list(X_data):
+    text_data.append(preprocess(review))</pre>
+
+
+
+<p>Create a new data frame to store a small part of the data that has been performed preprocessing.</p>
+
+
+
+<pre class="EnlighterJSRAW" data-enlighter-language="python" data-enlighter-theme="atomic" data-enlighter-highlight="" data-enlighter-linenumbers="" data-enlighter-lineoffset="" data-enlighter-title="" data-enlighter-group="">DF_text= pd.DataFrame()
+DF_text['reviews'] = text_data
+DF_text['labels'] = list(y_data)</pre>
+
+
+
+<p>Now, we plot the data distribution for both classes. From the plot figure, we can see that the distribution of the data is almost the same portion for both negative and positive sentiments.</p>
+
+
+
+<pre class="EnlighterJSRAW" data-enlighter-language="python" data-enlighter-theme="atomic" data-enlighter-highlight="" data-enlighter-linenumbers="" data-enlighter-lineoffset="" data-enlighter-title="" data-enlighter-group="">#Plot data distribution
+import seaborn as sns
+sns.countplot(x='labels', data=DF_text)
+
+"""
+If you use Anaconda with PyCharm uncomment these lines to show the figure.
+"""
+#import matplot.pyplot as as plt
+#plt.show()</pre>
+
+
+
+<div class="wp-block-image"><figure class="aligncenter size-large is-resized"><img decoding="async" loading="lazy" src="https://machinelearningspace.com/wp-content/uploads/2020/01/data_dist.png" alt="Sentiment Analysis: Plot data " class="wp-image-1097" width="472" height="232" srcset="https://machinelearningspace.com/wp-content/uploads/2020/01/data_dist.png 783w, https://machinelearningspace.com/wp-content/uploads/2020/01/data_dist-300x148.png 300w, https://machinelearningspace.com/wp-content/uploads/2020/01/data_dist-768x378.png 768w, https://machinelearningspace.com/wp-content/uploads/2020/01/data_dist-550x270.png 550w" sizes="(max-width: 472px) 100vw, 472px" /></figure></div>
+
+
+
+<p>Now we&#8217;re going to divide our dataset into 70% as training and 30% as testing data. </p>
+
+
+
+<pre class="EnlighterJSRAW" data-enlighter-language="python" data-enlighter-theme="atomic" data-enlighter-highlight="" data-enlighter-linenumbers="" data-enlighter-lineoffset="" data-enlighter-title="" data-enlighter-group="">X_train, X_test, y_train, y_test = \
+    model_selection.train_test_split(DF_text['reviews'], 
+                                     DF_text['labels'], test_size=0.30)
+
+</pre>
+
+
+
+<p>Convert them to the list array.</p>
+
+
+
+<pre class="EnlighterJSRAW" data-enlighter-language="python" data-enlighter-theme="atomic" data-enlighter-highlight="" data-enlighter-linenumbers="" data-enlighter-lineoffset="" data-enlighter-title="" data-enlighter-group="">import numpy as np
+X_train=np.array(X_train.values.tolist())
+X_test=np.array(X_test.values.tolist())
+y_train=np.array(y_train.values.tolist())
+y_test=np.array(y_test.values.tolist())</pre>
+
+
+
+<h2>Word Embeddings</h2>
+
+
+
+<p>In order to train our data, Deep learning model requires the numerical data as its input. Since we&#8217;re working on text classification, we need to translate our text data into numerical vectors. To do so, we&#8217;re going to use a method called word embeddings. This method encodes every word into an n-dimensional dense vector in which similar words will have similar encoding. </p>
+
+
+
+<p>For this purpose, we’re going to use a Keras Embedding layer.  Embedding layer can be used to learn both custom word embeddings and predefined word embeddings like GloVe and Word2Vec.   </p>
+
+
+
+<p>In this NLP tutorial, we&#8217;re going to use a Keras embedding layer to train our own custom word embedding model.  The layer is initialized with random weights and is defined as the first hidden layer of a network.   </p>
+
+
+
+<p>The Embedding layer has 3 important arguments:</p>
+
+
+
+<ul><li><strong>input_dim</strong>: Size of the vocabulary in the text data. </li><li><strong>output_dim</strong>: Size of the vector space in which words will be embedded. This is a parameter that can be experimented for having a better performance. (ex: 32, 100, &#8230;)</li><li><strong>input_length</strong>: Length of input sequences</li></ul>
+
+
+
+<h3>Tokenizer</h3>
+
+
+
+<p>Before the data text can be fed to the Keras embedding layer, it must be encoded first, so that each word can be represented by a unique integer as required by the Embedding layer. To do this, Keras also provides a Tokenizer API that allows us to vectorize a text corpus into a sequence of integers.  </p>
+
+
+
+<p>The following is the code to do the tokenization.  First, we create a Keras tokenizer object. Then, with this object, we can call the <code>fit_on_texts</code>  function to fit the Keras tokenizer to the dataset.   </p>
+
+
+
+<pre class="EnlighterJSRAW" data-enlighter-language="python" data-enlighter-theme="atomic" data-enlighter-highlight="" data-enlighter-linenumbers="" data-enlighter-lineoffset="" data-enlighter-title="" data-enlighter-group="">from keras_preprocessing.text import Tokenizer
+
+tokenizer = Tokenizer()
+tokenizer.fit_on_texts(X_train)
+word_index=tokenizer.word_index
+vocab_size = len(word_index)+1
+print(vocab_size)</pre>
+
+
+
+<p>After fitting the tokenizer to the dataset, now we&#8217;re ready to convert our text to sequences by passing our data text to <code>texts_to_sequences</code> function.</p>
+
+
+
+<p>This function tokenizes the input corpus into tokens of words where each of the word token is associated with a unique integer value.  </p>
+
+
+
+<p>We do it for both training and testing data. </p>
+
+
+
+<pre class="EnlighterJSRAW" data-enlighter-language="python" data-enlighter-theme="atomic" data-enlighter-highlight="" data-enlighter-linenumbers="" data-enlighter-lineoffset="" data-enlighter-title="" data-enlighter-group="">X_train = tokenizer.texts_to_sequences(X_train)
+X_test = tokenizer.texts_to_sequences(X_test)</pre>
+
+
+
+<p>Finally, we add padding to make all the vectors to have the same length <code>maxlen</code>.</p>
+
+
+
+<pre class="EnlighterJSRAW" data-enlighter-language="python" data-enlighter-theme="atomic" data-enlighter-highlight="" data-enlighter-linenumbers="" data-enlighter-lineoffset="" data-enlighter-title="" data-enlighter-group="">from tensorflow.keras.preprocessing.sequence import pad_sequences
+from tensorflow.keras.utils import to_categorical
+
+maxlen = 100
+
+X_train_pad = pad_sequences(X_train, padding='post', maxlen=maxlen)
+X_test_pad = pad_sequences(X_test, padding='post', maxlen=maxlen)</pre>
+
+
+
+<p>Now, the data is ready to be feed to the model.   </p>
+
+
+
+<h2>Create a Model</h2>
+
+
+
+<p>We are now ready to create the NN model. For this tutorial, we use a simple network, you can try to use a deeper network, or with different configuration such as using LSTM layer, and perform a comparison.</p>
+
+
+
+<p>We create a sequential model with the embedding layer is the first layer, then followed by a GRU layer with dropout=0.2 and recurrent_dropout=0.2.  and the last layer is a dense layer with the sigmoid activation function. We use sigmoid because we only have one output. </p>
+
+
+
+<pre class="EnlighterJSRAW" data-enlighter-language="python" data-enlighter-theme="atomic" data-enlighter-highlight="" data-enlighter-linenumbers="" data-enlighter-lineoffset="" data-enlighter-title="" data-enlighter-group="">from tensorflow.keras.layers import Flatten, GRU, Dense, Flatten, Embedding
+from tensorflow.keras.models import Sequential
+
+model = Sequential()
+model.add(Embedding(vocab_size, 20, input_length=maxlen))
+model.add(GRU(units=32,dropout=0.2, recurrent_dropout=0.2))
+model.add(Dense(1, activation='sigmoid'))</pre>
+
+
+
+<h2>Compile the Model</h2>
+
+
+
+<p>To compile the model, we use <code>Adam </code>optimizer with <code>binary_crossentropy</code>.</p>
+
+
+
+<pre class="EnlighterJSRAW" data-enlighter-language="python" data-enlighter-theme="atomic" data-enlighter-highlight="" data-enlighter-linenumbers="" data-enlighter-lineoffset="" data-enlighter-title="" data-enlighter-group="">model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['acc'])
+print(model.summary())</pre>
+
+
+
+<div class="wp-block-image"><figure class="aligncenter size-full"><img decoding="async" loading="lazy" width="917" height="359" src="https://machinelearningspace.com/wp-content/uploads/2020/02/summary.png" alt="Sentiment Analysis: Model Word embeddings" class="wp-image-1119" srcset="https://machinelearningspace.com/wp-content/uploads/2020/02/summary.png 917w, https://machinelearningspace.com/wp-content/uploads/2020/02/summary-300x117.png 300w, https://machinelearningspace.com/wp-content/uploads/2020/02/summary-768x301.png 768w, https://machinelearningspace.com/wp-content/uploads/2020/02/summary-550x215.png 550w" sizes="(max-width: 917px) 100vw, 917px" /></figure></div>
+
+
+
+<h2>Train the Model</h2>
+
+
+
+<p>Now, it&#8217;s time to train the model. </p>
+
+
+
+<p>This code below is used to train the model. We validate the model while training process.</p>
+
+
+
+<pre class="EnlighterJSRAW" data-enlighter-language="python" data-enlighter-theme="atomic" data-enlighter-highlight="" data-enlighter-linenumbers="" data-enlighter-lineoffset="" data-enlighter-title="" data-enlighter-group="">model.fit(X_train_pad, y_train, batch_size=128, epochs=10, verbose=1, validation_data=(X_test_pad, y_test))</pre>
+
+
+
+<p>After 10 epochs, the model achieves 86.66% of accuracy after epoch 10. Not bad.</p>
+
+
+
+<div class="wp-block-image"><figure class="aligncenter size-full"><img decoding="async" loading="lazy" width="1459" height="504" src="https://machinelearningspace.com/wp-content/uploads/2020/02/accuracy.png" alt="Training Validation Sentiment Analysis" class="wp-image-1117" srcset="https://machinelearningspace.com/wp-content/uploads/2020/02/accuracy.png 1459w, https://machinelearningspace.com/wp-content/uploads/2020/02/accuracy-300x104.png 300w, https://machinelearningspace.com/wp-content/uploads/2020/02/accuracy-1024x354.png 1024w, https://machinelearningspace.com/wp-content/uploads/2020/02/accuracy-768x265.png 768w, https://machinelearningspace.com/wp-content/uploads/2020/02/accuracy-550x190.png 550w" sizes="(max-width: 1459px) 100vw, 1459px" /></figure></div>
+
+
+
+<h2>Conclusion</h2>
+
+
+
+<p>In this article, we&#8217;ve built a simple model of sentiment analysis using custom word embeddings by leveraging the Keras API in TensorFlow 2.0.</p>
+
+
+
+<p>Here are some remarks:</p>
+
+
+
+<ul><li>To do text classification, we need to do some data preprocessing,  including removing punctuation, numbers, and single character and converting upper cases to lower cases, so that the computer can easily understand and enhance the accuracy rate.   </li><li>A Deep learning model requires numerical data as its input. Therefore we need to convert our text data into numerical vectors.  To do so, we use the word embeddings method.</li><li>Word embeddings are a way of representing words that can encode corpus text into numerical vector spaces in which similar words will have similar encoding.   </li><li>It is considered the best available representation of words in NLP. </li></ul>
+
+
+
+<h2>Next&#8230;</h2>
+
+
+
+<p>To explore further, in the next tutorial, we&#8217;re going to use two popular pre-trained word embeddings, GloVe and Word2Vec. So, see you in the next tutorial.</p>
+<p>The post <a rel="nofollow" href="https://machinelearningspace.com/sentiment-analysis-tensorflow/">Sentiment Analysis Using Keras Embedding Layer in TensorFlow 2.0</a> appeared first on <a rel="nofollow" href="https://machinelearningspace.com">Machine Learning Space</a>.</p>
+]]></content:encoded>
+					
+					<wfw:commentRss>https://machinelearningspace.com/sentiment-analysis-tensorflow/feed/</wfw:commentRss>
+			<slash:comments>1</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>

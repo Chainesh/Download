@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	
+	>
+<channel>
+	<title>
+	Comments on: The beginner’s guide to implementing YOLOv3 in TensorFlow 2.0 (part-3)	</title>
+	<atom:link href="https://machinelearningspace.com/yolov3-tensorflow-2-part-3/feed/" rel="self" type="application/rss+xml" />
+	<link>https://machinelearningspace.com/yolov3-tensorflow-2-part-3/?utm_source=rss&#038;utm_medium=rss&#038;utm_campaign=yolov3-tensorflow-2-part-3</link>
+	<description>A space for learning machine learning</description>
+	<lastBuildDate>Sat, 29 Oct 2022 22:36:55 +0000</lastBuildDate>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=6.1.1</generator>
+	<item>
+		<title>
+		By: Sumana		</title>
+		<link>https://machinelearningspace.com/yolov3-tensorflow-2-part-3/#comment-896</link>
+
+		<dc:creator><![CDATA[Sumana]]></dc:creator>
+		<pubDate>Wed, 06 Jan 2021 18:31:29 +0000</pubDate>
+		<guid isPermaLink="false">https://machinelearningspace.com/?p=79#comment-896</guid>
+
+					<description><![CDATA[Hi, 
+Firstly, thank you for this blog. This is helpful. I have been reading about YOLOv3 for sometime now. This is the best tutorial I have found. Thank you. Please keep writing.
+
+I am trying to run this in Spyder(python 3.7). 
+I have this error. Please help.
+
+runfile(&#039;D:/YOLO/YOLOv3_TF2/convert_weights.py&#039;, wdir=&#039;D:/YOLO/YOLOv3_TF2&#039;)
+Reloaded modules: yolov3
+Traceback (most recent call last):
+
+  File &quot;D:\YOLO\YOLOv3_TF2\convert_weights.py&quot;, line 62, in 
+    main()
+
+  File &quot;D:\YOLO\YOLOv3_TF2\convert_weights.py&quot;, line 53, in main
+    model=YOLOv3Net(cfgfile,model_size,num_classes)
+
+  File &quot;D:\YOLO\YOLOv3_TF2\yolov3.py&quot;, line 22, in YOLOv3Net
+    blocks = parse_cfg(cfgfile)
+
+  File &quot;D:\YOLO\YOLOv3_TF2\yolov3.py&quot;, line 17, in parse_cfg
+    key, value = line.split(&quot;=&quot;)
+
+ValueError: not enough values to unpack (expected 2, got 1)
+
+Thank you,
+Sumana]]></description>
+			<content:encoded><![CDATA[<p>Hi,<br />
+Firstly, thank you for this blog. This is helpful. I have been reading about YOLOv3 for sometime now. This is the best tutorial I have found. Thank you. Please keep writing.</p>
+<p>I am trying to run this in Spyder(python 3.7).<br />
+I have this error. Please help.</p>
+<p>runfile(&#8216;D:/YOLO/YOLOv3_TF2/convert_weights.py&#8217;, wdir=&#8217;D:/YOLO/YOLOv3_TF2&#8242;)<br />
+Reloaded modules: yolov3<br />
+Traceback (most recent call last):</p>
+<p>  File &#8220;D:\YOLO\YOLOv3_TF2\convert_weights.py&#8221;, line 62, in<br />
+    main()</p>
+<p>  File &#8220;D:\YOLO\YOLOv3_TF2\convert_weights.py&#8221;, line 53, in main<br />
+    model=YOLOv3Net(cfgfile,model_size,num_classes)</p>
+<p>  File &#8220;D:\YOLO\YOLOv3_TF2\yolov3.py&#8221;, line 22, in YOLOv3Net<br />
+    blocks = parse_cfg(cfgfile)</p>
+<p>  File &#8220;D:\YOLO\YOLOv3_TF2\yolov3.py&#8221;, line 17, in parse_cfg<br />
+    key, value = line.split(&#8220;=&#8221;)</p>
+<p>ValueError: not enough values to unpack (expected 2, got 1)</p>
+<p>Thank you,<br />
+Sumana</p>
+]]></content:encoded>
+		
+			</item>
+		<item>
+		<title>
+		By: vishnu		</title>
+		<link>https://machinelearningspace.com/yolov3-tensorflow-2-part-3/#comment-446</link>
+
+		<dc:creator><![CDATA[vishnu]]></dc:creator>
+		<pubDate>Mon, 31 Aug 2020 21:55:04 +0000</pubDate>
+		<guid isPermaLink="false">https://machinelearningspace.com/?p=79#comment-446</guid>
+
+					<description><![CDATA[Hello, When I am trying to convert the weights after training with my own dataset, I am getting the following error, please help me in resolving this. My input image size is 608 * 608 * 3
+
+ERROR : 
+Traceback (most recent call last):
+  File &quot;convert_weights.py&quot;, line 55, in 
+    main()
+  File &quot;convert_weights.py&quot;, line 48, in main
+    load_weights(model,cfgfile,weightfile)
+  File &quot;convert_weights.py&quot;, line 34, in load_weights
+    conv_shape).transpose([2, 3, 1, 0])
+ValueError: cannot reshape array of size 264248 into shape (256,128,3,3)]]></description>
+			<content:encoded><![CDATA[<p>Hello, When I am trying to convert the weights after training with my own dataset, I am getting the following error, please help me in resolving this. My input image size is 608 * 608 * 3</p>
+<p>ERROR :<br />
+Traceback (most recent call last):<br />
+  File &#8220;convert_weights.py&#8221;, line 55, in<br />
+    main()<br />
+  File &#8220;convert_weights.py&#8221;, line 48, in main<br />
+    load_weights(model,cfgfile,weightfile)<br />
+  File &#8220;convert_weights.py&#8221;, line 34, in load_weights<br />
+    conv_shape).transpose([2, 3, 1, 0])<br />
+ValueError: cannot reshape array of size 264248 into shape (256,128,3,3)</p>
+]]></content:encoded>
+		
+			</item>
+		<item>
+		<title>
+		By: rahmadsadli		</title>
+		<link>https://machinelearningspace.com/yolov3-tensorflow-2-part-3/#comment-401</link>
+
+		<dc:creator><![CDATA[rahmadsadli]]></dc:creator>
+		<pubDate>Fri, 28 Aug 2020 13:18:23 +0000</pubDate>
+		<guid isPermaLink="false">https://machinelearningspace.com/?p=79#comment-401</guid>
+
+					<description><![CDATA[In reply to &lt;a href=&quot;https://machinelearningspace.com/yolov3-tensorflow-2-part-3/#comment-395&quot;&gt;RS&lt;/a&gt;.
+
+Hi, it means you don&#039;t have a GPU card installed on you computer.
+Just make those lines as comments like this:
+
+&quot;&quot;&quot;
+physical_devices = tf.config.experimental.list_physical_devices(&#039;GPU&#039;)
+assert len(physical_devices) &gt; 0, &quot;Not enough GPU hardware devices available&quot;
+tf.config.experimental.set_memory_growth(physical_devices[0], True)
+&quot;&quot;&quot;]]></description>
+			<content:encoded><![CDATA[<p>In reply to <a href="https://machinelearningspace.com/yolov3-tensorflow-2-part-3/#comment-395">RS</a>.</p>
+<p>Hi, it means you don&#8217;t have a GPU card installed on you computer.<br />
+Just make those lines as comments like this:</p>
+<p>&#8220;&#8221;&#8221;<br />
+physical_devices = tf.config.experimental.list_physical_devices(&#8216;GPU&#8217;)<br />
+assert len(physical_devices) > 0, &#8220;Not enough GPU hardware devices available&#8221;<br />
+tf.config.experimental.set_memory_growth(physical_devices[0], True)<br />
+&#8220;&#8221;&#8221;</p>
+]]></content:encoded>
+		
+			</item>
+		<item>
+		<title>
+		By: RS		</title>
+		<link>https://machinelearningspace.com/yolov3-tensorflow-2-part-3/#comment-395</link>
+
+		<dc:creator><![CDATA[RS]]></dc:creator>
+		<pubDate>Thu, 27 Aug 2020 17:21:19 +0000</pubDate>
+		<guid isPermaLink="false">https://machinelearningspace.com/?p=79#comment-395</guid>
+
+					<description><![CDATA[Hi,
+I get the following error: 
+(py3.7.7_tf2_yolo_venv) D:\Technical\Dev\CV\Object_Detection\YOLO\YOLOv3_TF2&#062;python convert_weights.py
+Traceback (most recent call last):
+  File &quot;convert_weights.py&quot;, line 20, in 
+    from yolov3 import YOLOv3Net
+  File &quot;D:\Technical\Dev\CV\Object_Detection\YOLO\YOLOv3_TF2\yolov3.py&quot;, line 25, in 
+    tf.config.experimental.set_memory_growth(physical_devices[0], True)
+IndexError: list index out of range
+
+Details of the Environment:
+****************************
+python = 3.7.7
+opencv =  4.4.0
+tensorflow =  2.1.0]]></description>
+			<content:encoded><![CDATA[<p>Hi,<br />
+I get the following error:<br />
+(py3.7.7_tf2_yolo_venv) D:\Technical\Dev\CV\Object_Detection\YOLO\YOLOv3_TF2&gt;python convert_weights.py<br />
+Traceback (most recent call last):<br />
+  File &#8220;convert_weights.py&#8221;, line 20, in<br />
+    from yolov3 import YOLOv3Net<br />
+  File &#8220;D:\Technical\Dev\CV\Object_Detection\YOLO\YOLOv3_TF2\yolov3.py&#8221;, line 25, in<br />
+    tf.config.experimental.set_memory_growth(physical_devices[0], True)<br />
+IndexError: list index out of range</p>
+<p>Details of the Environment:<br />
+****************************<br />
+python = 3.7.7<br />
+opencv =  4.4.0<br />
+tensorflow =  2.1.0</p>
+]]></content:encoded>
+		
+			</item>
+		<item>
+		<title>
+		By: rahmadsadli		</title>
+		<link>https://machinelearningspace.com/yolov3-tensorflow-2-part-3/#comment-375</link>
+
+		<dc:creator><![CDATA[rahmadsadli]]></dc:creator>
+		<pubDate>Wed, 19 Aug 2020 19:47:09 +0000</pubDate>
+		<guid isPermaLink="false">https://machinelearningspace.com/?p=79#comment-375</guid>
+
+					<description><![CDATA[In reply to &lt;a href=&quot;https://machinelearningspace.com/yolov3-tensorflow-2-part-3/#comment-372&quot;&gt;Venkat Alapati&lt;/a&gt;.
+
+Hi, normally, this code works perfectly using Python 3.7 and Tensorflow 2.0 and 2.1.
+Just take a look at your Python version. Good luck!]]></description>
+			<content:encoded><![CDATA[<p>In reply to <a href="https://machinelearningspace.com/yolov3-tensorflow-2-part-3/#comment-372">Venkat Alapati</a>.</p>
+<p>Hi, normally, this code works perfectly using Python 3.7 and Tensorflow 2.0 and 2.1.<br />
+Just take a look at your Python version. Good luck!</p>
+]]></content:encoded>
+		
+			</item>
+		<item>
+		<title>
+		By: Venkat Alapati		</title>
+		<link>https://machinelearningspace.com/yolov3-tensorflow-2-part-3/#comment-372</link>
+
+		<dc:creator><![CDATA[Venkat Alapati]]></dc:creator>
+		<pubDate>Wed, 19 Aug 2020 07:38:23 +0000</pubDate>
+		<guid isPermaLink="false">https://machinelearningspace.com/?p=79#comment-372</guid>
+
+					<description><![CDATA[Hi, I have tried to execute the “convert_weights.py” but it gave me the error:
+“can’t multiply sequence by non-int of the type ‘Tensor&#039;” referring to the line: “box_centers = (box_centers + cxy) * strides” in the “yolov3.py”.
+Do you have any suggestion? In my opinion it makes sense that a multiplication between a Tensor and a Tuple is not allowed, but I whould like to know how it is possible to solve it. Thank you.]]></description>
+			<content:encoded><![CDATA[<p>Hi, I have tried to execute the “convert_weights.py” but it gave me the error:<br />
+“can’t multiply sequence by non-int of the type ‘Tensor&#8217;” referring to the line: “box_centers = (box_centers + cxy) * strides” in the “yolov3.py”.<br />
+Do you have any suggestion? In my opinion it makes sense that a multiplication between a Tensor and a Tuple is not allowed, but I whould like to know how it is possible to solve it. Thank you.</p>
+]]></content:encoded>
+		
+			</item>
+		<item>
+		<title>
+		By: SMS		</title>
+		<link>https://machinelearningspace.com/yolov3-tensorflow-2-part-3/#comment-93</link>
+
+		<dc:creator><![CDATA[SMS]]></dc:creator>
+		<pubDate>Thu, 09 Jul 2020 10:45:06 +0000</pubDate>
+		<guid isPermaLink="false">https://machinelearningspace.com/?p=79#comment-93</guid>
+
+					<description><![CDATA[Thanks so much for the blog post.]]></description>
+			<content:encoded><![CDATA[<p>Thanks so much for the blog post.</p>
+]]></content:encoded>
+		
+			</item>
+		<item>
+		<title>
+		By: เบอร์สวยมงคล		</title>
+		<link>https://machinelearningspace.com/yolov3-tensorflow-2-part-3/#comment-92</link>
+
+		<dc:creator><![CDATA[เบอร์สวยมงคล]]></dc:creator>
+		<pubDate>Thu, 09 Jul 2020 10:43:27 +0000</pubDate>
+		<guid isPermaLink="false">https://machinelearningspace.com/?p=79#comment-92</guid>
+
+					<description><![CDATA[Thanks for fantastic info I was looking for this info for my mission.]]></description>
+			<content:encoded><![CDATA[<p>Thanks for fantastic info I was looking for this info for my mission.</p>
+]]></content:encoded>
+		
+			</item>
+		<item>
+		<title>
+		By: กรองหน้ากากอนามัย		</title>
+		<link>https://machinelearningspace.com/yolov3-tensorflow-2-part-3/#comment-91</link>
+
+		<dc:creator><![CDATA[กรองหน้ากากอนามัย]]></dc:creator>
+		<pubDate>Thu, 09 Jul 2020 10:42:17 +0000</pubDate>
+		<guid isPermaLink="false">https://machinelearningspace.com/?p=79#comment-91</guid>
+
+					<description><![CDATA[I like the valuable information you provide in your articles.]]></description>
+			<content:encoded><![CDATA[<p>I like the valuable information you provide in your articles.</p>
+]]></content:encoded>
+		
+			</item>
+		<item>
+		<title>
+		By: ทิชชู่เปียกแอลกอฮอล์		</title>
+		<link>https://machinelearningspace.com/yolov3-tensorflow-2-part-3/#comment-90</link>
+
+		<dc:creator><![CDATA[ทิชชู่เปียกแอลกอฮอล์]]></dc:creator>
+		<pubDate>Thu, 09 Jul 2020 10:41:09 +0000</pubDate>
+		<guid isPermaLink="false">https://machinelearningspace.com/?p=79#comment-90</guid>
+
+					<description><![CDATA[I like the valuable information you provide in your articles.]]></description>
+			<content:encoded><![CDATA[<p>I like the valuable information you provide in your articles.</p>
+]]></content:encoded>
+		
+			</item>
+	</channel>
+</rss>
