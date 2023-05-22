@@ -1,0 +1,23 @@
+import json
+
+def generate_json_file(text_file_path, json_file_path):
+    data = []
+    
+    with open(text_file_path, 'r') as file:
+        for line in file:
+            line = line.strip()
+            bbox = [int(coord) for coord in line.split(',')]
+            data.append({
+                'x_min': bbox[0],
+                'y_min': bbox[1],
+                'x_max': bbox[2],
+                'y_max': bbox[3]
+            })
+    
+    with open(json_file_path, 'w') as file:
+        json.dump(data, file, indent=4)
+
+# Usage example
+text_file_path = 'path/to/your/text_file.txt'
+json_file_path = 'path/to/your/output_file.json'
+generate_json_file(text_file_path, json_file_path)
